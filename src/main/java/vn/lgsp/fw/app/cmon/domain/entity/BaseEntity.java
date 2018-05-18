@@ -1,10 +1,7 @@
 package vn.lgsp.fw.app.cmon.domain.entity;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import vn.lgsp.fw.app.cmon.util.DateTimeUtil;
+import vn.lgsp.fw.app.cmon.util.FwDateTimeUtil;
 
 /**
  * This class is an abstract superclass for all Entity classes in the
@@ -39,10 +36,10 @@ public class BaseEntity<T extends BaseEntity<T>> implements Persistable<Long>{
 	private Long id;
 	
 	@Column(columnDefinition="datetime")
-	private LocalDateTime createdAt = DateTimeUtil.localDateTimeNow();
+	private LocalDateTime createdAt = FwDateTimeUtil.localDateTimeNow();
 	
 	@Column(columnDefinition="datetime")
-	private LocalDateTime modifiedAt = DateTimeUtil.localDateTimeNow();
+	private LocalDateTime modifiedAt = FwDateTimeUtil.localDateTimeNow();
 	
 	private Long createdBy;
 	
