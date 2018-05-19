@@ -1,5 +1,6 @@
 package vn.lgsp.fw.app.cmon.domain.service.ethnicity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -7,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 
 import vn.lgsp.fw.app.cmon.domain.entity.CmonEthnicity;
 import vn.lgsp.fw.app.cmon.domain.entity.QCmonEthnicity;
@@ -28,19 +31,19 @@ public class CmonEthnicityServiceImpl implements CmonEthnicityService<CmonEthnic
 	CmonEthnicityRepository cmonEthnicityRepository;
 	
 	@Override
-	public List<CmonEthnicity> load() {
-		return cmonEthnicityRepository.findAll();
+	public CmonEthnicity findOne(Long id) {
+		return cmonEthnicityRepository.findOne(predicateFindOne(id));
 	}
 	
 	@Override
-	public CmonEthnicity findOne(Long id) {
-		return cmonEthnicityRepository.findOne(predicateFindOne(id));
+	public List<CmonEthnicity> load(Order order) {
+		return cmonEthnicityRepository.findAllListResult(base, null, 
+				new OrderSpecifier<>(order, Expressions.dateTimePath(LocalDateTime.class, CMON_ETHNICITY, "createdAt")));
 	}
 
 	public Page<CmonEthnicity> findAllWithPaging(CmonEthnicitySearchCriteria search, Pageable pageable) {
 		return cmonEthnicityRepository.findAll(predicateFindAll(search), pageable);
 	}
-	
 	
 
 	private Predicate predicateFindOne(Long id) {
