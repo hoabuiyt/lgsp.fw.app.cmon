@@ -10,8 +10,14 @@ import vn.lgsp.fw.app.cmon.domain.service.BaseService;
 
 public interface CmonEthnicityService<T extends BaseEntity<T>> extends BaseService<T>{
 	
+	List<CmonEthnicity> load(Order order);
+	
 	CmonEthnicity findOne(Long id);
 
-	List<CmonEthnicity> load(Order order);
+	CmonEthnicity save(CmonEthnicity ethnicity);
+
+	CmonEthnicity update(Long id, CmonEthnicity ethnicity);
+
+	void delete(Long id);
 	
 }

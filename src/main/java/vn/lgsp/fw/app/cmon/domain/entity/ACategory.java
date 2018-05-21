@@ -11,11 +11,11 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper=true)
 @MappedSuperclass
 public abstract class ACategory<T extends BaseEntity<T>> extends BaseEntity<T> {
-
-	private static final long serialVersionUID = 6451571741613034513L;
-
-	private String name;
 	
+	private static final long serialVersionUID = -3538337409835996732L;
+
 	private String code;
+	
+	private String name;
 	
 }

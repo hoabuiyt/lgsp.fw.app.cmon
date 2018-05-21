@@ -1,5 +1,5 @@
 /**
- * 
+ * Spring REST Resource controller
  */
 /**
  * @author caltalys

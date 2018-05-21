@@ -5,8 +5,12 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
@@ -16,13 +20,15 @@ import lombok.ToString;
  */
 @Entity
 @Table(name="cmon_ethnicity")
-@Data
+@Data 												//Define a mutable value object (getter, setter)
 @ToString
 @EqualsAndHashCode(callSuper=true)
+@NoArgsConstructor(access = AccessLevel.PRIVATE) 	//Create an empty constructor call to appease Jackson, but which is private and not usable to our app’s code
+@JsonIgnoreProperties(ignoreUnknown = true) 		//Ignore unknown attributes when deserializing JSON
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class CmonEthnicity extends ACategory<CmonEthnicity>{
-
-	private static final long serialVersionUID = 1836710375481963127L;
+	
+	private static final long serialVersionUID = -168197636045249911L;
 
 	
 }

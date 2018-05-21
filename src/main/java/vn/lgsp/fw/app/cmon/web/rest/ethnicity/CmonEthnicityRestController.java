@@ -3,7 +3,10 @@ package vn.lgsp.fw.app.cmon.web.rest.ethnicity;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.ExposesResourceFor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,38 +16,46 @@ import org.springframework.web.bind.annotation.RestController;
 import com.querydsl.core.types.Order;
 
 import vn.lgsp.fw.app.cmon.domain.entity.CmonEthnicity;
-import vn.lgsp.fw.app.cmon.domain.repository.ethnicity.CmonEthnicityRepository;
 import vn.lgsp.fw.app.cmon.domain.service.ethnicity.CmonEthnicityService;
 import vn.lgsp.fw.app.cmon.web.rest.BaseRestController;
 
 @RestController
-@RequestMapping(path="/ethnicities", produces=MediaType.APPLICATION_JSON_VALUE)
+@ExposesResourceFor(CmonEthnicity.class)
+@RequestMapping(path="/cmonEthnicities", produces=MediaType.APPLICATION_JSON_VALUE)
 public class CmonEthnicityRestController extends BaseRestController{
 
 	@Autowired
 	CmonEthnicityService<CmonEthnicity> ethnicityService;
 
 	@Autowired
-	CmonEthnicityRepository cmonEthnicityRepository;
+	CmonEthnicityResourceAssembler ethnicityAssembler;
 	
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public List<CmonEthnicity> loadCmonEthnicity() {
-		return ethnicityService.load(Order.DESC);
+	public ResponseEntity<List<CmonEthnicityResource>> loadCmonEthnicity() {
+		return ResponseEntity.ok(ethnicityAssembler.toResources(ethnicityService.load(Order.DESC)));
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value="/{id}")
-	public CmonEthnicity getCmonEthnicity(@PathVariable(name="id") Long id) {
-		return ethnicityService.findOne(id);
+	public ResponseEntity<CmonEthnicityResource> getCmonEthnicity(@PathVariable(name="id") Long id) {
+		return ResponseEntity.ok(ethnicityAssembler.toResource(ethnicityService.findOne(id)));
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public CmonEthnicity addCmonEthnicity(@RequestBody CmonEthnicity ethnicity) {
-		return cmonEthnicityRepository.save(ethnicity);
+	public ResponseEntity<CmonEthnicityResource> createCmonEthnicity(@RequestBody CmonEthnicity ethnicity) {
+		CmonEthnicity entity = ethnicityService.save(ethnicity);
+		return new ResponseEntity<CmonEthnicityResource>(ethnicityAssembler.toResource(entity),HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public CmonEthnicity updateCmonEthnicity(@RequestBody CmonEthnicity ethnicity) {
-		return cmonEthnicityRepository.save(ethnicity);
+	public ResponseEntity<CmonEthnicityResource> updateCmonEthnicity(@PathVariable(name="id") Long id,@RequestBody CmonEthnicity ethnicity) {
+		CmonEthnicity entity = ethnicityService.update(id, ethnicity);
+		return new ResponseEntity<CmonEthnicityResource>(ethnicityAssembler.toResource(entity),HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, value="/{id}")
+	public ResponseEntity<Object> deleteCmonEthnicity(@PathVariable(name="id") Long id) {
+		ethnicityService.delete(id);
+		return ResponseEntity.ok().build();
 	}
 }

@@ -1,5 +1,5 @@
 /**
- * 
+ * Spring MVC Controller
  */
 /**
  * @author caltalys

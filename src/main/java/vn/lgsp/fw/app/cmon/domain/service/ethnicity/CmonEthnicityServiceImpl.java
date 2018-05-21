@@ -15,7 +15,6 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 
-import lombok.Data;
 import vn.lgsp.fw.app.cmon.domain.entity.CmonEthnicity;
 import vn.lgsp.fw.app.cmon.domain.entity.QCmonEthnicity;
 import vn.lgsp.fw.app.cmon.domain.repository.ethnicity.CmonEthnicityRepository;
@@ -32,16 +31,32 @@ public class CmonEthnicityServiceImpl implements CmonEthnicityService<CmonEthnic
 	CmonEthnicityRepository cmonEthnicityRepository;
 	
 	@Override
-	public CmonEthnicity findOne(Long id) {
-		return cmonEthnicityRepository.findOne(predicateFindOne(id));
-	}
-	
-	@Override
 	public List<CmonEthnicity> load(Order order) {
 		return cmonEthnicityRepository.findAllListResult(base, null, 
 				new OrderSpecifier<>(order, Expressions.dateTimePath(LocalDateTime.class, CMON_ETHNICITY, "createdAt")));
 	}
+	
+	@Override
+	public CmonEthnicity findOne(Long id) {
+		return cmonEthnicityRepository.findOne(predicateFindOne(id));
+	}
 
+	@Override
+	public CmonEthnicity save(CmonEthnicity ethnicity) {
+		return cmonEthnicityRepository.save(ethnicity);
+	}
+	
+	@Override
+	public CmonEthnicity update(Long id, CmonEthnicity ethnicity) {
+		//TODO add more logic
+		return cmonEthnicityRepository.save(ethnicity);
+	}
+	
+	@Override
+	public void delete(Long id) {
+		cmonEthnicityRepository.delete(id);
+	}
+	
 	public Page<CmonEthnicity> findAllWithPaging(CmonEthnicitySearchCriteria search, Pageable pageable) {
 		return cmonEthnicityRepository.findAll(predicateFindAll(search), pageable);
 	}
