@@ -1,8 +1,5 @@
 package vn.lgsp.fw.app.cmon.domain.entity;
 
-import java.time.LocalDateTime;
-
-import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -15,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import vn.lgsp.fw.app.cmon.util.FwDateTimeUtil;
 
 /**
  * This class is an abstract superclass for all Entity classes in the
@@ -25,25 +21,15 @@ import vn.lgsp.fw.app.cmon.util.FwDateTimeUtil;
 
 @Data
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper=true)
 @MappedSuperclass
-public class BaseEntity<T extends BaseEntity<T>> implements Persistable<Long>{
+public class BaseEntity<T extends BaseEntity<T>> extends Auditable<String> implements Persistable<Long>{
 
 	private static final long serialVersionUID = 6272945932232827822L;
 	
 	@Id
 	@GeneratedValue
 	private Long id;
-	
-	@Column(columnDefinition="datetime")
-	private LocalDateTime createdAt = FwDateTimeUtil.localDateTimeNow();
-	
-	@Column(columnDefinition="datetime")
-	private LocalDateTime modifiedAt = FwDateTimeUtil.localDateTimeNow();
-	
-	private Long createdBy;
-	
-	private Long modifiedBy;
 	
 	@JsonIgnore
 	private boolean deleted;

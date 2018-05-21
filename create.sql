@@ -1,1 +1,1 @@
-create table cmon_ethnicity (id bigint not null auto_increment, createdAt datetime, createdBy bigint, deleted bit not null, modifiedAt datetime, modifiedBy bigint, code varchar(255), name varchar(255), primary key (id)) ENGINE=InnoDB
+create table cmon_ethnicity (id bigint not null auto_increment, createdAt datetime, createdBy varchar(255), modifiedAt datetime, modifiedBy varchar(255), deleted bit not null, code varchar(255), name varchar(255), primary key (id)) ENGINE=InnoDB

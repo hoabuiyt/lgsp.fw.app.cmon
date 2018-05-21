@@ -15,6 +15,7 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 
+import lombok.Data;
 import vn.lgsp.fw.app.cmon.domain.entity.CmonEthnicity;
 import vn.lgsp.fw.app.cmon.domain.entity.QCmonEthnicity;
 import vn.lgsp.fw.app.cmon.domain.repository.ethnicity.CmonEthnicityRepository;
@@ -45,7 +46,6 @@ public class CmonEthnicityServiceImpl implements CmonEthnicityService<CmonEthnic
 		return cmonEthnicityRepository.findAll(predicateFindAll(search), pageable);
 	}
 	
-
 	private Predicate predicateFindOne(Long id) {
 		return base.and(CMON_ETHNICITY.id.eq(id));
 	}
