@@ -3,9 +3,8 @@ package vn.lgsp.fw.app.cmon.domain.entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
 
-import org.springframework.data.domain.Persistable;
+import org.springframework.hateoas.Identifiable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -23,28 +22,22 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode(callSuper=true)
 @MappedSuperclass
-public class BaseEntity<T extends BaseEntity<T>> extends Auditable<String> implements Persistable<Long>{
+public class BaseEntity<T extends BaseEntity<T>> extends Auditable<String> implements Identifiable<Long>{
 
-	private static final long serialVersionUID = 6272945932232827822L;
-	
+	private static final long serialVersionUID = 9197809217082471305L;
+
 	@Id
 	@GeneratedValue
 	private Long id;
 	
 	@JsonIgnore
 	private boolean deleted;
-	
-	@Override
-	public Long getId() {
-		return id;
-	}
 
-	@Transient
-	@JsonIgnore
 	@Override
 	public boolean isNew() {
 		return id == null || id == 0;
 	}
+	
 /*
 	@Override
 	public boolean equals(Object that) {
