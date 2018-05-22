@@ -48,8 +48,12 @@ public class CmonEthnicityServiceImpl implements CmonEthnicityService {
 
 	@Override
 	public CmonEthnicity update(Long id, CmonEthnicity ethnicity) {
-		// TODO add more logic
-		return cmonEthnicityRepository.save(ethnicity);
+		boolean exist = cmonEthnicityRepository.exists(predicateFindOne(id));
+		if (exist) {
+			return cmonEthnicityRepository.save(ethnicity);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
