@@ -7,8 +7,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +20,6 @@ import vn.lgsp.fw.app.cmon.domain.entity.CmonEthnicity;
 import vn.lgsp.fw.app.cmon.domain.entity.QCmonEthnicity;
 import vn.lgsp.fw.app.cmon.domain.repository.ethnicity.CmonEthnicityRepository;
 import vn.lgsp.fw.app.cmon.domain.repository.ethnicity.CmonEthnicitySearchCriteria;
-import vn.lgsp.fw.app.cmon.web.rest.exception.ApiError;
 import vn.lgsp.fw.app.cmon.web.rest.exception.EntityNotFoundException;
 import vn.lgsp.fw.app.cmon.web.rest.exception.UpdateEntityMismatchException;
 
@@ -75,8 +72,13 @@ public class CmonEthnicityServiceImpl implements CmonEthnicityService {
 	}
 
 	@Override
-	public void delete(Long id) {
-		cmonEthnicityRepository.delete(id);
+	public void delete(Long id) throws EntityNotFoundException {
+		boolean exist = cmonEthnicityRepository.exists(predicateFindOne(id));
+		if (exist) {
+			cmonEthnicityRepository.delete(id);
+		} else {
+			throw new EntityNotFoundException(CmonEthnicity.class, "id", id.toString());
+		}
 	}
 
 	public Page<CmonEthnicity> findAllWithPaging(CmonEthnicitySearchCriteria search, Pageable pageable) {

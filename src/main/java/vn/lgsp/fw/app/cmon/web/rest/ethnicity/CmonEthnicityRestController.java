@@ -21,7 +21,7 @@ import vn.lgsp.fw.app.cmon.web.rest.exception.UpdateEntityMismatchException;
 
 @RestController
 @ExposesResourceFor(CmonEthnicity.class)
-@RequestMapping(path = "/cmonEthnicities", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/rest/cmonEthnicities", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CmonEthnicityRestController extends BaseRestController {
 
 	@Autowired
@@ -42,7 +42,6 @@ public class CmonEthnicityRestController extends BaseRestController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<CmonEthnicityResource> createCmonEthnicity(@RequestBody CmonEthnicity ethnicity) {
-		System.out.println("isnew:"+ethnicity.isNew());
 		CmonEthnicity entity = ethnicityService.save(ethnicity);
 		return new ResponseEntity<CmonEthnicityResource>(ethnicityAssembler.toResource(entity), HttpStatus.CREATED);
 	}
@@ -55,7 +54,7 @@ public class CmonEthnicityRestController extends BaseRestController {
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-	public ResponseEntity<Object> deleteCmonEthnicity(@PathVariable(name = "id", required=true) Long id) {
+	public ResponseEntity<Object> deleteCmonEthnicity(@PathVariable(name = "id", required=true) Long id) throws EntityNotFoundException {
 		ethnicityService.delete(id);
 		return ResponseEntity.ok().build();
 	}

@@ -16,5 +16,5 @@ public interface BaseService<T extends BaseEntity<T>> {
 
 	T update(Long id, T ethnicity) throws EntityNotFoundException, UpdateEntityMismatchException;
 
-	void delete(Long id);
+	void delete(Long id) throws EntityNotFoundException;
 }
