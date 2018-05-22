@@ -3,10 +3,12 @@ package vn.lgsp.fw.app.cmon.domain.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import vn.lgsp.fw.app.cmon.domain.entity.BaseEntity;
 
 @Service
+@Transactional
 public class BaseServiceImpl<T extends BaseEntity<T>> implements BaseService<T>{
 
 	@Override

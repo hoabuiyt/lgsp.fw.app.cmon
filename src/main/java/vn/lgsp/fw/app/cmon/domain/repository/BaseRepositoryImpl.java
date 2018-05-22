@@ -134,7 +134,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
 		return query.fetchFirst();
 	}
 	
-	@Override
+	/*@Override
 	public <S extends T> S save(S entity) {
 		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		if (attr != null) {
@@ -158,6 +158,6 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
 			}
 		}
 		return super.save(entity);
-	}
+	}*/
 
 }

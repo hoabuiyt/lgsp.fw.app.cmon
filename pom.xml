@@ -109,11 +109,17 @@
 		    <groupId>org.apache.commons</groupId>
 		    <artifactId>commons-lang3</artifactId>
 		</dependency>
-			
+		
+		<!--Begin support for Java 8 date/time types in JPA-Hibernate & JSON (specified in JSR-310 specification) -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-java8</artifactId>
 		</dependency>
+		<dependency>
+		    <groupId>com.fasterxml.jackson.datatype</groupId>
+		    <artifactId>jackson-datatype-jsr310</artifactId>
+		</dependency>
+		<!--End support for Java 8 date/time types -->
 	</dependencies>
 
 	<build>

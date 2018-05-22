@@ -26,12 +26,10 @@ public abstract class Auditable<U extends Serializable> implements Persistable<L
 
 	@JsonIgnore
 	@CreatedDate
-	//@Convert(converter = LocalDateTimeAttributeConverter.class)
 	private LocalDateTime createdAt;// = FwDateTimeUtil.localDateTimeNow();
 	
 	@JsonIgnore
 	@LastModifiedDate
-	//@Convert(converter = LocalDateTimeAttributeConverter.class)
 	private LocalDateTime modifiedAt;// = FwDateTimeUtil.localDateTimeNow();
 	
 	@JsonIgnore

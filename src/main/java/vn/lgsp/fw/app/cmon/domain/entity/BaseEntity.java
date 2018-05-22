@@ -33,6 +33,7 @@ public class BaseEntity<T extends BaseEntity<T>> extends Auditable<String> imple
 	@JsonIgnore
 	private boolean deleted;
 
+	@JsonIgnore
 	@Override
 	public boolean isNew() {
 		return id == null || id == 0;

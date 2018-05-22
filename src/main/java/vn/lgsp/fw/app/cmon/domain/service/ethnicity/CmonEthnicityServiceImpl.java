@@ -7,7 +7,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
@@ -19,8 +22,12 @@ import vn.lgsp.fw.app.cmon.domain.entity.CmonEthnicity;
 import vn.lgsp.fw.app.cmon.domain.entity.QCmonEthnicity;
 import vn.lgsp.fw.app.cmon.domain.repository.ethnicity.CmonEthnicityRepository;
 import vn.lgsp.fw.app.cmon.domain.repository.ethnicity.CmonEthnicitySearchCriteria;
+import vn.lgsp.fw.app.cmon.web.rest.exception.ApiError;
+import vn.lgsp.fw.app.cmon.web.rest.exception.EntityNotFoundException;
+import vn.lgsp.fw.app.cmon.web.rest.exception.UpdateEntityMismatchException;
 
 @Service
+@Transactional
 public class CmonEthnicityServiceImpl implements CmonEthnicityService {
 
 	private static final QCmonEthnicity CMON_ETHNICITY = QCmonEthnicity.cmonEthnicity;
@@ -31,14 +38,22 @@ public class CmonEthnicityServiceImpl implements CmonEthnicityService {
 	CmonEthnicityRepository cmonEthnicityRepository;
 
 	@Override
-	public List<CmonEthnicity> getAll() {
-		return cmonEthnicityRepository.findAllListResult(base, null, new OrderSpecifier<>(Order.DESC,
-				Expressions.dateTimePath(LocalDateTime.class, CMON_ETHNICITY, "createdAt")));
+	public List<CmonEthnicity> getAll() throws EntityNotFoundException {
+		List<CmonEthnicity> list = cmonEthnicityRepository.findAllListResult(base, null, new OrderSpecifier<>(
+				Order.DESC, Expressions.dateTimePath(LocalDateTime.class, CMON_ETHNICITY, "createdAt")));
+		if (list == null || list.isEmpty()) {
+			throw new EntityNotFoundException(CmonEthnicity.class);
+		}
+		return list;
 	}
 
 	@Override
-	public CmonEthnicity getOne(Long id) {
-		return cmonEthnicityRepository.findOne(predicateFindOne(id));
+	public CmonEthnicity getOne(Long id) throws EntityNotFoundException {
+		CmonEthnicity entity = cmonEthnicityRepository.findOne(predicateFindOne(id));
+		if (entity == null) {
+			throw new EntityNotFoundException(CmonEthnicity.class, "id", id.toString());
+		}
+		return entity;
 	}
 
 	@Override
@@ -47,13 +62,16 @@ public class CmonEthnicityServiceImpl implements CmonEthnicityService {
 	}
 
 	@Override
-	public CmonEthnicity update(Long id, CmonEthnicity ethnicity) {
-		boolean exist = cmonEthnicityRepository.exists(predicateFindOne(id));
-		if (exist) {
-			return cmonEthnicityRepository.save(ethnicity);
-		} else {
-			return null;
+	public CmonEthnicity update(Long id, CmonEthnicity ethnicity) throws EntityNotFoundException, UpdateEntityMismatchException {
+		if(id.equals(ethnicity.getId())) {
+			boolean exist = cmonEthnicityRepository.exists(predicateFindOne(id));
+			if (exist) {
+				return cmonEthnicityRepository.save(ethnicity);
+			} else {
+				throw new EntityNotFoundException(CmonEthnicity.class, "id", id.toString());
+			}
 		}
+		throw new UpdateEntityMismatchException(CmonEthnicity.class, id, ethnicity.getId());
 	}
 
 	@Override

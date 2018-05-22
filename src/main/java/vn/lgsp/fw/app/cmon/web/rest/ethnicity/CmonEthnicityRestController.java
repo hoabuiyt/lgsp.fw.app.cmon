@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import vn.lgsp.fw.app.cmon.domain.entity.CmonEthnicity;
 import vn.lgsp.fw.app.cmon.domain.service.ethnicity.CmonEthnicityService;
 import vn.lgsp.fw.app.cmon.web.rest.BaseRestController;
+import vn.lgsp.fw.app.cmon.web.rest.exception.EntityNotFoundException;
+import vn.lgsp.fw.app.cmon.web.rest.exception.UpdateEntityMismatchException;
 
 @RestController
 @ExposesResourceFor(CmonEthnicity.class)
@@ -29,30 +31,31 @@ public class CmonEthnicityRestController extends BaseRestController {
 	CmonEthnicityResourceAssembler ethnicityAssembler;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<CmonEthnicityResource>> loadCmonEthnicity() {
+	public ResponseEntity<List<CmonEthnicityResource>> loadCmonEthnicity() throws EntityNotFoundException {
 		return ResponseEntity.ok(ethnicityAssembler.toResources(ethnicityService.getAll()));
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
-	public ResponseEntity<CmonEthnicityResource> getCmonEthnicity(@PathVariable(name = "id") Long id) {
+	public ResponseEntity<CmonEthnicityResource> getCmonEthnicity(@PathVariable(name = "id", required=true) Long id) throws EntityNotFoundException {
 		return ResponseEntity.ok(ethnicityAssembler.toResource(ethnicityService.getOne(id)));
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<CmonEthnicityResource> createCmonEthnicity(@RequestBody CmonEthnicity ethnicity) {
+		System.out.println("isnew:"+ethnicity.isNew());
 		CmonEthnicity entity = ethnicityService.save(ethnicity);
 		return new ResponseEntity<CmonEthnicityResource>(ethnicityAssembler.toResource(entity), HttpStatus.CREATED);
 	}
 
-	@RequestMapping(method = RequestMethod.PUT)
-	public ResponseEntity<CmonEthnicityResource> updateCmonEthnicity(@PathVariable(name = "id") Long id,
-			@RequestBody CmonEthnicity ethnicity) {
+	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+	public ResponseEntity<CmonEthnicityResource> updateCmonEthnicity(@PathVariable(name = "id", required=true) Long id,
+			@RequestBody CmonEthnicity ethnicity) throws EntityNotFoundException, UpdateEntityMismatchException {
 		CmonEthnicity entity = ethnicityService.update(id, ethnicity);
 		return new ResponseEntity<CmonEthnicityResource>(ethnicityAssembler.toResource(entity), HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-	public ResponseEntity<Object> deleteCmonEthnicity(@PathVariable(name = "id") Long id) {
+	public ResponseEntity<Object> deleteCmonEthnicity(@PathVariable(name = "id", required=true) Long id) {
 		ethnicityService.delete(id);
 		return ResponseEntity.ok().build();
 	}
