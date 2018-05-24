@@ -10,12 +10,12 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode(callSuper=true)
 @MappedSuperclass
-public abstract class ACategory<T extends BaseEntity<T>> extends BaseEntity<T> {
+public abstract class ADanhMuc<T extends BaseEntity<T>> extends BaseEntity<T> {
 	
 	private static final long serialVersionUID = -3538337409835996732L;
 
-	private String code;
+	private String ma;
 	
-	private String name;
+	private String ten;
 	
 }

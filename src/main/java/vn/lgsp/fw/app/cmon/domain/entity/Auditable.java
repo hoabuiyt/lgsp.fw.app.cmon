@@ -1,6 +1,5 @@
 package vn.lgsp.fw.app.cmon.domain.entity;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.EntityListeners;
@@ -10,7 +9,6 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.domain.Persistable;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -20,24 +18,22 @@ import lombok.Data;
 @Data
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class Auditable<U extends Serializable> implements Persistable<Long>{
-
-	private static final long serialVersionUID = 1L;
+public abstract class Auditable<U >{
 
 	@JsonIgnore
 	@CreatedDate
-	private LocalDateTime createdAt;// = FwDateTimeUtil.localDateTimeNow();
+	private LocalDateTime ngayTao;// = FwDateTimeUtil.localDateTimeNow();
 	
 	@JsonIgnore
 	@LastModifiedDate
-	private LocalDateTime modifiedAt;// = FwDateTimeUtil.localDateTimeNow();
+	private LocalDateTime ngaySua;// = FwDateTimeUtil.localDateTimeNow();
 	
 	@JsonIgnore
 	@CreatedBy
-	private U createdBy;
+	private U nguoiTao;
 	
 	@JsonIgnore
 	@LastModifiedBy
-	private U modifiedBy;
+	private U nguoiSua;
 	
 }

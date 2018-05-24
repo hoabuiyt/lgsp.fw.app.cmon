@@ -4,6 +4,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import org.springframework.data.domain.Persistable;
 import org.springframework.hateoas.Identifiable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -22,7 +23,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode(callSuper=true)
 @MappedSuperclass
-public class BaseEntity<T extends BaseEntity<T>> extends Auditable<String> implements Identifiable<Long>{
+public class BaseEntity<T extends BaseEntity<T>> extends Auditable<String> implements Identifiable<Long>, Persistable<Long>{
 
 	private static final long serialVersionUID = 9197809217082471305L;
 

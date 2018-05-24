@@ -2,7 +2,6 @@ package vn.lgsp.fw.app.cmon.domain.repository;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,7 +11,6 @@ import javax.persistence.EntityManager;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
-import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -24,12 +22,8 @@ import org.springframework.data.querydsl.QSort;
 import org.springframework.data.querydsl.SimpleEntityPathResolver;
 import org.springframework.data.repository.support.PageableExecutionUtils;
 import org.springframework.data.repository.support.PageableExecutionUtils.TotalSupplier;
-import org.springframework.data.repository.support.Repositories;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.util.SystemPropertyUtils;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.querydsl.core.types.EntityPath;
 import com.querydsl.core.types.OrderSpecifier;
@@ -101,8 +95,35 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
 
 	@Override
 	public T findById(Long id) {
+		EntityPath<?> ePath = getEntityPath();
+		final JPAQuery<T> query = getQuery(ePath);
+		query.where(Expressions.numberPath(Long.class, ePath, "id").eq(id));
+		return query.fetchFirst();
+	}
+
+	@Override
+	public boolean exists(ID id) {
+		System.out.println(id);
+		EntityPath<?> ePath = getEntityPath();
+		final JPAQuery<T> query = getQuery(ePath);
+		query.where(Expressions.numberPath(Long.class, ePath, "id").eq((Long)id));
+		return query.fetchCount()==1L;
+	}
+
+	private JPAQuery<T> getQuery(EntityPath<?> path) {
+		final JPAQuery<T> query = new JPAQuery<T>(em)
+				.setHint("org.hibernate.cacheable", SystemPropertyUtils.resolvePlaceholders("${conf.default.cacheable:true}"))
+				.from(path);
+		if (MethodUtils.getAccessibleMethod(getDomainClass(), "isDeleted", new Class<?>[0]) != null) {
+			query.where(Expressions.booleanPath(path, "deleted").isFalse());
+		}
+		return query;
+	}
+
+	@SuppressWarnings("unchecked")
+	private EntityPath<T> getEntityPath() {
 		final String path = StringUtils.uncapitalize(getDomainClass().getSimpleName());
-		EntityPath<?> ePath = null;
+		EntityPath<T> ePath = null;
 		try {
 			final Class<?> qclass = Class.forName(getDomainClass().getPackage().getName() + ".Q" + getDomainClass().getSimpleName());
 			Field field = FieldUtils.getDeclaredField(qclass, path + "1");
@@ -110,7 +131,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
 				field = FieldUtils.getDeclaredField(qclass, path);
 			}
 			if (field != null) {
-				ePath = (EntityPath<?>) field.get(null);
+				ePath = (EntityPath<T>) field.get(null);
 			}
 		} catch (final IllegalAccessException e) {
 			Logger.getAnonymousLogger().log(Level.INFO, e.getMessage(), e);
@@ -120,18 +141,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
 		if (ePath == null) {
 			ePath = new EntityPathBase<T>(getDomainClass(), path);
 		}
-		
-		final JPAQuery<T> query = new JPAQuery<T>(em)
-				.setHint("org.hibernate.cacheable", SystemPropertyUtils.resolvePlaceholders("${conf.default.cacheable:true}"))
-				.from(ePath);
-		
-		if (MethodUtils.getAccessibleMethod(getDomainClass(), "isDeleted", new Class<?>[0]) != null) {
-			query.where(Expressions.booleanPath(ePath, "deleted").isFalse());
-		}
-		
-		query.where(Expressions.numberPath(Long.class, ePath, "id").eq(id));
-		
-		return query.fetchFirst();
+		return ePath;
 	}
 	
 	/*@Override

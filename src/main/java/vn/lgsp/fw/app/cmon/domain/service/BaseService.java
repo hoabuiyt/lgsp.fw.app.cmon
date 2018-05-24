@@ -8,7 +8,7 @@ import vn.lgsp.fw.app.cmon.web.rest.exception.UpdateEntityMismatchException;
 
 public interface BaseService<T extends BaseEntity<T>> {
 
-	List<T> getAll() throws EntityNotFoundException;
+	List<T> getAll();
 	
 	T getOne(Long id) throws EntityNotFoundException;
 
@@ -17,4 +17,5 @@ public interface BaseService<T extends BaseEntity<T>> {
 	T update(Long id, T ethnicity) throws EntityNotFoundException, UpdateEntityMismatchException;
 
 	void delete(Long id) throws EntityNotFoundException;
+
 }

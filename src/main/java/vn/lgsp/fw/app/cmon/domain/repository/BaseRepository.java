@@ -23,7 +23,7 @@ import com.querydsl.core.types.Predicate;
  * @param <ID>
  */
 @NoRepositoryBean
-@Transactional
+@Transactional(readOnly=true)
 public interface BaseRepository<T,ID extends Serializable> extends JpaRepository<T, ID>, QueryDslPredicateExecutor<T>{
 
 	Class<T> getDomainClass();	
@@ -33,5 +33,7 @@ public interface BaseRepository<T,ID extends Serializable> extends JpaRepository
 	List<T> findAllListResult(Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders);
 	
 	T findById(@Param("id") Long id);
+
+	boolean exists(ID id);
 	
 }

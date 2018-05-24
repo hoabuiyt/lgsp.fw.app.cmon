@@ -1,1 +1,3 @@
-create table cmon_ethnicity (id bigint not null auto_increment, createdAt datetime, createdBy varchar(255), modifiedAt datetime, modifiedBy varchar(255), deleted bit not null, code varchar(255), name varchar(255), primary key (id)) ENGINE=InnoDB
+create table cmon_dantoc (id bigint not null auto_increment, ngaySua datetime, ngayTao datetime, nguoiSua varchar(255), nguoiTao varchar(255), deleted bit not null, ma varchar(255), ten varchar(255), primary key (id)) ENGINE=InnoDB
+create table cmon_donvihanhchinh (id bigint not null auto_increment, ngaySua datetime, ngayTao datetime, nguoiSua varchar(255), nguoiTao varchar(255), deleted bit not null, ma varchar(255), ten varchar(255), cap integer, cha_id bigint, stt integer, primary key (id)) ENGINE=InnoDB
+alter table cmon_donvihanhchinh add constraint FKs5aarwu790304a8qm15vgwpuf foreign key (cha_id) references cmon_donvihanhchinh (id)

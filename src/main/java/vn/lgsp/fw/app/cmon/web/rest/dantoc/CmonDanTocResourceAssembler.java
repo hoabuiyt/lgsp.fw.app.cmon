@@ -1,4 +1,4 @@
-package vn.lgsp.fw.app.cmon.web.rest.ethnicity;
+package vn.lgsp.fw.app.cmon.web.rest.dantoc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
@@ -6,10 +6,10 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
-import vn.lgsp.fw.app.cmon.domain.entity.CmonEthnicity;
+import vn.lgsp.fw.app.cmon.domain.entity.CmonDanToc;
 
 @Component
-public class CmonEthnicityResourceAssembler extends ResourceAssemblerSupport<CmonEthnicity, CmonEthnicityResource>{
+public class CmonDanTocResourceAssembler extends ResourceAssemblerSupport<CmonDanToc, CmonDanTocResource>{
 
 	@Autowired
     protected EntityLinks entityLinks;
@@ -18,13 +18,13 @@ public class CmonEthnicityResourceAssembler extends ResourceAssemblerSupport<Cmo
 	//private static final String UPDATE_REL = "update";
     //private static final String DELETE_REL = "delete";
     
-	public CmonEthnicityResourceAssembler() {
-		super(CmonEthnicityRestController.class, CmonEthnicityResource.class);
+	public CmonDanTocResourceAssembler() {
+		super(CmonDanTocRestController.class, CmonDanTocResource.class);
 	}
 
 	@Override
-	public CmonEthnicityResource toResource(CmonEthnicity entity) {
-		CmonEthnicityResource resource = new CmonEthnicityResource(entity);
+	public CmonDanTocResource toResource(CmonDanToc entity) {
+		CmonDanTocResource resource = new CmonDanTocResource(entity);
 		final Link selfLink = entityLinks.linkToSingleResource(entity);
         resource.add(selfLink.withSelfRel());
         //resource.add(selfLink.withRel(UPDATE_REL));

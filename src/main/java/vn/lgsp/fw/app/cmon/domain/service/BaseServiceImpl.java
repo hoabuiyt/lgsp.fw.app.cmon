@@ -22,12 +22,12 @@ public class BaseServiceImpl<T extends BaseEntity<T>> implements BaseService<T>{
 	}
 
 	@Override
-	public T save(T ethnicity) {
+	public T save(T entity) {
 		return null;
 	}
 
 	@Override
-	public T update(Long id, T ethnicity) {
+	public T update(Long id, T entity) {
 		return null;
 	}
 
