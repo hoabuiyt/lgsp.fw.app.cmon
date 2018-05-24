@@ -1,11 +1,192 @@
-<?page title="Quản lý đơn vị hành chính" contentType="text/html;charset=UTF-8"?>
-<zk>
-<window>
-<navbar>
+<?style href="/backend/admin-lte/bootstrap/css/bootstrap.css" type="text/css" ?>
+<?style href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css" ?>
+<?style href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" type="text/css" ?>
+<?style href="/backend/admin-lte/plugins/jvectormap/jquery-jvectormap-1.2.2.css" type="text/css" ?>
+<?style href="/backend/admin-lte/dist/css/AdminLTE.css" type="text/css" ?>
+<?style href="/backend/admin-lte/dist/css/custom.css" type="text/css" ?>
+<?style href="/backend/admin-lte/dist/css/skins/_all-skins.min.css" type="text/css" ?>
+<?style href="/backend/toastr/build/toastr.css" type="text/css" ?>
+<?style href="/backend/admin-lte/plugins/pace/pace.min.css" type="text/css" ?>
+<?style href="/backend/assets/css/hdnd-hoavang.css" type="text/css" ?>
 
-</navbar>
-</window>
-<window title="Quản lý đơn vị hành chính" border="normal">
+<?page title="Danh mục dùng chung" contentType="text/html;charset=UTF-8"?>
+<?meta http-equiv="X-UA-Compatible" content="IE=edge"?>
+<?link rel="icon" href="/img/favicon.png" type="image/x-icon" ?>
+<?meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"?>
 
-</window>
+<zk xmlns:n="native" xmlns:x="xhtml" xmlns:zk="zk" >
+<script type="text/javascript" src="/backend/admin-lte/bootstrap/js/bootstrap.js" />
+<script type="text/javascript" src="/backend/admin-lte/plugins/fastclick/fastclick.js" />
+<script type="text/javascript" src="/backend/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js" />
+<script type="text/javascript" src="/backend/admin-lte/dist/js/demo.js" />
+<script type="text/javascript" src="/backend/admin-lte/dist/js/app.js" defer="true"/>
+<script type="text/javascript" src="/backend/toastr/build/toastr.min.js" />
+<script type="text/javascript" src="/backend/admin-lte/plugins/pace/pace.min.js" />
+
+	<div class="hold-transition skin-blue sidebar-mini">
+		<zscript><![CDATA[
+			int testValue = 4;
+			String ctxPath = execution.getContextPath();
+			String serverName = execution.getServerName() + "";
+			String serverPort = execution.getServerPort() + "";
+			String urlImage = "http://" + serverName + ":" + serverPort + "/" + ctxPath;
+			String file="";
+		]]></zscript>
+		<div class="wrapper">
+			<n:header class="main-header">
+			    <!-- Logo -->
+			    <n:a href="${ctxPath}/cp/" class="logo hidden-xs">
+			    	<div class="bum-image">
+			    		<n:img src="${urlImage}/backend/assets/img/logoAD.tH2ifU" class="img-circle" alt="User Image" />
+			    	</div>
+			      	<!-- logo for regular state and mobile devices -->
+			      	<n:span class="logo-lg"><n:b>LGSP Quảng Nam</n:b></n:span>
+			    </n:a>
+			
+			    <!-- Header Navbar: style can be found in header.less -->
+			    <n:nav class="navbar navbar-static-top">
+				    <!-- Sidebar toggle button-->
+				    <n:span class="sider-bar-text">Phầm mềm quản lý danh mục dùng chung</n:span>	
+				    <div class="logo-mobile">
+				    	<n:span class="">LGSP Quảng Nam</n:span>				    	
+				    </div>
+				    
+			      	<!-- Navbar Right Menu -->
+			      	<div class="navbar-custom-menu">
+				        <n:ul class="nav navbar-nav">
+				          	<!-- User Account: style can be found in dropdown.less -->
+				          	<n:li class="dropdown user user-menu">
+					            <n:a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+					              	<n:img src="${urlImage}/backend/admin-lte/dist/img/user1-128x128.png" class="user-image" alt="User Image" />
+					              	<n:span class="hidden-xs">Nguyễn Văn A</n:span>
+					            </n:a>
+				            	<n:ul class="dropdown-menu">
+				              		<!-- User image -->
+				              		<n:li class="user-header">
+				                		<n:img src="${urlImage}/backend/admin-lte/dist/img/user1-128x128.png" class="img-circle" alt="User Image" />
+				                		<n:p>Nguyễn Văn A</n:p>
+				                		<n:p>Chuyên viên</n:p>
+				              		</n:li>
+				              		<!-- Menu Footer-->
+				              		<n:li class="user-footer">
+				                		<n:div class="pull-left">
+				                  			<a class="btn btn-success btn-flat">
+				                  				Thay đổi thông tin
+				                  			</a>
+			                			</n:div>
+			                			<n:div class="pull-right">
+			                  				<a class="btn btn-success btn-flat">Đăng xuất</a>
+				                		</n:div>
+				              		</n:li>
+				            	</n:ul>
+				          	</n:li>
+				        </n:ul>
+			      	</div>
+				</n:nav>
+			</n:header>
+		  	<!-- Left side column. contains the logo and sidebar -->
+		  	<n:aside class="main-sidebar" >
+			    <n:a href="javascript:void(0)"
+			    	class="sidebar-toggle" data-toggle="offcanvas" role="button">
+				    	<n:i class="fa fa-caret-left lf " style="font-size: 25px;"></n:i>
+				    	<n:i class="fa fa-caret-right rh " style="font-size: 25px;"></n:i>
+				    </n:a>
+		    	<!-- sidebar: style can be found in sidebar.less -->
+	    		<n:section class="sidebar">
+		      		<!-- Sidebar user panel -->
+			      				      
+			      	<!-- /.search form -->
+			      	<!-- sidebar menu: : style can be found in sidebar.less -->
+			      	<n:ul class="sidebar-menu">
+			      		<n:li class="active">
+			      			<n:a href="javascript:void(0)">
+					        	<n:i class="fa fa-newspaper-o"></n:i> <n:span>Quản lý đơn vị hành chính </n:span>
+					        </n:a>
+			      		</n:li>
+			      		<n:li>
+			      			<n:a href="javascript:void(0)">
+					        	<n:i class="fa fa-newspaper-o"></n:i> <n:span>Quản lý danh mục</n:span> <n:i class="fa fa-angle-left pull-right"></n:i>
+					        </n:a>
+					        <n:ul class="treeview-menu">
+			          			<n:li>
+									<n:a href="#">
+										<n:i class="fa fa-gear"></n:i> Danh mục 1
+									</n:a>
+								</n:li>
+			          			<n:li>
+									<n:a href="#">
+									<n:i class="fa fa-gear"></n:i> Danh mục 2
+									</n:a>
+								</n:li>
+								<n:li>
+									<n:a href="#">
+									<n:i class="fa fa-gear"></n:i> Danh mục 3
+									</n:a>
+								</n:li>	
+			          		</n:ul>
+			      		</n:li>
+		        		
+			      	</n:ul>
+			    </n:section>
+			    <!-- /.sidebar -->
+		  	</n:aside>
+		
+		 	<!-- Content Wrapper. Contains page content -->
+		  	<n:div class="content-wrapper">
+			    <!-- include instant="true" src="${file}"></include -->
+		  	</n:div>
+		  	<n:div class="control-sidebar-bg"></n:div>
+		</div>
+	</div>
+	<n:script>
+		$(document).ajaxStart(function() { Pace.restart(); });
+	</n:script>
+	<n:script>
+		$(function() {
+		    var oldAlert = jq.alert;
+			jq.alert = function (msg, opts) {
+				if (!msg.indexOf('the request was rejected because its size')) {
+					msg = msg.replace('the request was rejected because its size (', '');
+					msg = msg.replace(') exceeds the configured maximum (', '_');
+					msg = msg.replace(')', '');
+					var v2 = msg.substring(msg.indexOf('_')+1, msg.length);
+					var n2 = (parseInt(v2)/1024/ 1024).toFixed(2) + 'MB';
+					newMsg = "File upload có dung lượng vượt quá " + n2;
+					opts.title = "Lỗi";
+					toastrError(newMsg,"");
+					//oldAlert(newMsg, opts);
+				} else if (!msg.indexOf('The request was rejected because the file size')) {
+					msg = msg.replace('The request was rejected because the file size (', '');
+					msg = msg.replace(') exceeds the configured maximum (', '_');
+					msg = msg.replace(')', '');
+					var v2 = msg.substring(msg.indexOf('_')+1, msg.length);
+					//var n2 = (parseInt(v2)/1024/ 1024).toFixed(2) + 'MB';
+					newMsg = "File upload có dung lượng vượt quá " + v2;
+					opts.title = "Lỗi";
+					toastrError(newMsg,"");
+					//oldAlert(newMsg, opts);
+				} else {
+					oldAlert(msg, opts);
+				}
+			}
+		});
+		$(".item-noti").slice(0, 10).show();
+		$('#loadMore').on('click', function(e) {
+	   		e.stopPropagation();
+	    });
+		$("#loadMore").on('click', function (e) {
+	       $(".notifications-menu").addClass("open");
+	       $(".item-noti:hidden").slice(0, 10).slideDown();
+	       if ($(".item-noti:hidden").length == 0) {
+	           $("#load").fadeOut('slow');
+	       }
+	       $(".noti").animate({
+	           scrollTop: 200
+	       }, 1000);
+	       console.log($(".item-noti:hidden").length);
+	       if($(".item-noti:hidden").length == 0) {
+	       	  $("#loadMore").hide();
+	       }
+	   });
+	</n:script>
 </zk>
