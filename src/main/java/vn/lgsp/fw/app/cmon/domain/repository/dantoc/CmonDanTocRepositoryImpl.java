@@ -1,6 +1,8 @@
 package vn.lgsp.fw.app.cmon.domain.repository.dantoc;
 
-public class CmonDanTocCustomRepositoryImpl implements CmonDanTocCustomRepository {
+import vn.lgsp.fw.app.cmon.domain.entity.CmonDanToc;
+
+public class CmonDanTocRepositoryImpl implements CustomCmonDanTocRepository<CmonDanToc> {
 
 	@Override
 	public void customMethod() {
