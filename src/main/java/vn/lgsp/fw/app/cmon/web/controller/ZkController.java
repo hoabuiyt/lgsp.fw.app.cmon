@@ -10,4 +10,9 @@ public class ZkController {
 		return "forward:/WEB-INF/zul/test.zul";
 	}
 	
+	@RequestMapping(value = "/don-vi-hanh-chinh")
+	public String qlDonviHanhChinh() {
+		return "forward:/WEB-INF/zul/donvihanhchinh/list.zul";
+	}
+	
 }
