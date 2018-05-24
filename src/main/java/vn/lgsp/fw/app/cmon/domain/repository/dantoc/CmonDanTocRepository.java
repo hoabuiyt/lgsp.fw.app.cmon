@@ -7,6 +7,6 @@ import vn.lgsp.fw.app.cmon.domain.entity.CmonDanToc;
 import vn.lgsp.fw.app.cmon.domain.repository.BaseRepository;
 
 @RepositoryRestResource
-public interface CmonDanTocRepository extends BaseRepository<CmonDanToc, Long>{
+public interface CmonDanTocRepository extends BaseRepository<CmonDanToc, Long>, CmonDanTocCustomRepository{
 
 }
