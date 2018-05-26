@@ -17,6 +17,10 @@
 		<name>org.zkoss.zk.WCS.cache</name>
 		<value>false</value>
 	</library-property>
+	<library-property>
+	    <name>org.zkoss.theme.preferred</name>
+	    <value>breeze</value>
+	</library-property>
 	<system-config>
 		<label-location>/WEB-INF/classes/application.properties</label-location>
 	</system-config>

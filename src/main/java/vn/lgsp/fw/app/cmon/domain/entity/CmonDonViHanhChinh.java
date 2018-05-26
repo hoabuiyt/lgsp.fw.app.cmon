@@ -32,7 +32,7 @@ import vn.lgsp.fw.app.cmon.domain.enums.ECapDonViHanhChinh;
 @Data 												
 @ToString
 @EqualsAndHashCode(callSuper=true)
-@NoArgsConstructor(access = AccessLevel.PRIVATE) 	
+//@NoArgsConstructor(access = AccessLevel.PRIVATE) 	
 @JsonIgnoreProperties(ignoreUnknown = true) 		
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class CmonDonViHanhChinh extends ADanhMuc<CmonDonViHanhChinh>{
