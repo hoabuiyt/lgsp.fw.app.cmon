@@ -3,6 +3,7 @@ package vn.lgsp.fw.app.cmon.web.rest.donvihanhchinh;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,8 +21,10 @@ import vn.lgsp.fw.app.cmon.web.rest.BaseRestController;
 import vn.lgsp.fw.app.cmon.web.rest.exception.EntityNotFoundException;
 import vn.lgsp.fw.app.cmon.web.rest.exception.UpdateEntityMismatchException;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 @RestController
-@ExposesResourceFor(CmonDonViHanhChinh.class)
 @RequestMapping(path = "/rest/cmonDonViHanhChinhs", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CmonDonViHanhChinhRestController extends BaseRestController {
 
@@ -40,7 +43,8 @@ public class CmonDonViHanhChinhRestController extends BaseRestController {
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public ResponseEntity<CmonDonViHanhChinhResource> getOne(
 			@PathVariable(name = "id", required = true) Long id) throws EntityNotFoundException {
-		return ResponseEntity.ok(assembler.toResource(service.getOne(id)));
+		CmonDonViHanhChinhResource resource = assembler.toResource(service.getOne(id));
+		return ResponseEntity.ok(resource);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -62,5 +66,12 @@ public class CmonDonViHanhChinhRestController extends BaseRestController {
 			throws EntityNotFoundException {
 		service.delete(id);
 		return ResponseEntity.ok().build();
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}/children")
+	public ResponseEntity<List<CmonDonViHanhChinhResource>> loadChildren(@PathVariable(name = "id", required = true) Long id){
+		List<CmonDonViHanhChinh> children = service.findAllDonViHanhChinhChildren(id);
+		//System.out.println(root.getChildren());
+		return ResponseEntity.ok(assembler.toResources(children));
 	}
 }

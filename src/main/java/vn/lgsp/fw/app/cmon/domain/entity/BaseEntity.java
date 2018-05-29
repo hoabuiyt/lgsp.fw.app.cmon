@@ -1,5 +1,7 @@
 package vn.lgsp.fw.app.cmon.domain.entity;
 
+import java.util.Objects;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -8,6 +10,7 @@ import org.springframework.data.domain.Persistable;
 import org.springframework.hateoas.Identifiable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,8 +23,9 @@ import lombok.ToString;
  */
 
 @Data
-@ToString
-@EqualsAndHashCode(callSuper=true)
+//@ToString
+//@EqualsAndHashCode//(callSuper=true)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @MappedSuperclass
 public class BaseEntity<T extends BaseEntity<T>> extends Auditable<String> implements Identifiable<Long>, Persistable<Long>{
 
@@ -40,7 +44,7 @@ public class BaseEntity<T extends BaseEntity<T>> extends Auditable<String> imple
 		return id == null || id == 0;
 	}
 	
-/*
+
 	@Override
 	public boolean equals(Object that) {
 		return this == that 
@@ -51,14 +55,14 @@ public class BaseEntity<T extends BaseEntity<T>> extends Auditable<String> imple
 	
 	@Override
     public int hashCode() {
-        *//**
+        /**
          * WARNING: Do not use collection relying on hashCode() such as
          * HashMap etc. before entity has been persisted. This implementation
          * breaks the constraint of hashCode immutability!
          *
          * Alternative: Generate UUID in constructor for hashCode().
-         *//*
+         */
         return null == getId() ? 0 : 17 + getId().hashCode() * 31;
-    }*/
+    }
 	
 }

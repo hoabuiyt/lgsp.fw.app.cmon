@@ -23,7 +23,7 @@ import lombok.ToString;
 @Data 												//Define a mutable value object (getter, setter)
 @ToString
 @EqualsAndHashCode(callSuper=true)
-@NoArgsConstructor(access = AccessLevel.PRIVATE) 	//Create an empty constructor call to appease Jackson, but which is private and not usable to our app’s code
+//@NoArgsConstructor(access = AccessLevel.PRIVATE) 	//Create an empty constructor call to appease Jackson, but which is private and not usable to our app’s code
 @JsonIgnoreProperties(ignoreUnknown = true) 		//Ignore unknown attributes when deserializing JSON
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class CmonDanToc extends ADanhMuc<CmonDanToc>{

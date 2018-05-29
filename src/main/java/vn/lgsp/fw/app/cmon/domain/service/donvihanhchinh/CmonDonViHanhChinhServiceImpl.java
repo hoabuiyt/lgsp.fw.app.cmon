@@ -97,4 +97,9 @@ public class CmonDonViHanhChinhServiceImpl implements CmonDonViHanhChinhService 
 		return predicate;
 	}
 
+	@Override
+	public List<CmonDonViHanhChinh> findAllDonViHanhChinhChildren(Long id) {
+		return repository.findAllDonViHanhChinhChildren(id);
+	}
+
 }

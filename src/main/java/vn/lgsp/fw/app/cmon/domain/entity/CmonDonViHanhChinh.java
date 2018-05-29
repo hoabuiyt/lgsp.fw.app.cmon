@@ -1,9 +1,11 @@
 package vn.lgsp.fw.app.cmon.domain.entity;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -12,13 +14,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 import vn.lgsp.fw.app.cmon.domain.enums.ECapDonViHanhChinh;
 
@@ -29,25 +31,26 @@ import vn.lgsp.fw.app.cmon.domain.enums.ECapDonViHanhChinh;
  */
 @Entity
 @Table(name="cmon_donvihanhchinh")
-@Data 												
+@Data
 @ToString
-@EqualsAndHashCode(callSuper=true)
-@NoArgsConstructor(access = AccessLevel.PRIVATE) 	
-@JsonIgnoreProperties(ignoreUnknown = true) 		
+@EqualsAndHashCode(callSuper=true)	
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class CmonDonViHanhChinh extends ADanhMuc<CmonDonViHanhChinh>{
 	
 	private static final long serialVersionUID = -168197636045249911L;
 
+	@Enumerated(EnumType.STRING)
 	private ECapDonViHanhChinh cap;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name = "cha_id",insertable=false,updatable=false)
+	@ManyToOne
+	@JoinColumn (name="cha_id")
+	@JsonBackReference
 	private CmonDonViHanhChinh cha;
 	
-	@OneToMany
-	@OrderColumn(name="stt")
-	@JoinColumn(name = "cha_id")
-	private List<CmonDonViHanhChinh> children = new LinkedList<CmonDonViHanhChinh>();
+	
+	//@OneToMany(mappedBy="cha")
+	//@OrderColumn(name="stt")
+	//private Set<CmonDonViHanhChinh> children = new HashSet<CmonDonViHanhChinh>();
+
 	
 }
