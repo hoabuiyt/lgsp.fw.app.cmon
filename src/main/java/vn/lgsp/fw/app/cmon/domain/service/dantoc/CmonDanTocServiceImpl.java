@@ -40,7 +40,21 @@ public class CmonDanTocServiceImpl implements CmonDanTocService {
 				Order.DESC, Expressions.dateTimePath(LocalDateTime.class, CMON_DANTOC, "ngaySua")));
 		return list;
 	}
+	
+	@Override
+	public List<CmonDanToc> getAll(Pageable pageable){
+		List<CmonDanToc> list = repository.findAllListResult(base, pageable, new OrderSpecifier<>(
+				Order.DESC, Expressions.dateTimePath(LocalDateTime.class, CMON_DANTOC, "ngaySua")));
+		return list;
+	}
 
+	@Override
+	public Page<CmonDanToc> findAllWithPaging(Pageable pageable) {
+		Page<CmonDanToc> page = repository.findAllPageResult(base, pageable, new OrderSpecifier<>(
+				Order.DESC, Expressions.dateTimePath(LocalDateTime.class, CMON_DANTOC, "ngaySua")));
+		return page;
+	}
+	
 	@Override
 	public CmonDanToc getOne(Long id) throws EntityNotFoundException {
 		CmonDanToc entity = repository.findById(id);

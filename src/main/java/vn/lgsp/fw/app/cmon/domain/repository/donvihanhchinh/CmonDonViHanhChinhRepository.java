@@ -10,7 +10,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import vn.lgsp.fw.app.cmon.domain.entity.CmonDonViHanhChinh;
 import vn.lgsp.fw.app.cmon.domain.repository.BaseRepository;
 
-//@RepositoryRestResource(excerptProjection = CmonDonViHanhChinhProjection.class)
+@RepositoryRestResource
 public interface CmonDonViHanhChinhRepository extends BaseRepository<CmonDonViHanhChinh, Long>, CustomCmonDonViHanhChinhRepository<CmonDonViHanhChinh>{
 
 	@Query("select d from CmonDonViHanhChinh d where d.cha.id=:id")

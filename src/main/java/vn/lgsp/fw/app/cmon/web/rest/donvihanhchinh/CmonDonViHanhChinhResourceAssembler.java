@@ -36,7 +36,6 @@ public class CmonDonViHanhChinhResourceAssembler extends ResourceAssemblerSuppor
         		resource.add(linkTo(methodOn(CmonDonViHanhChinhRestController.class).getOne(entity.getCha().getId())).withRel("cha"));
         	}
 		} catch (EntityNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         resource.add(linkTo(methodOn(CmonDonViHanhChinhRestController.class).loadChildren(entity.getId())).withRel("children"));
