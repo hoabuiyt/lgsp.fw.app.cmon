@@ -14,22 +14,22 @@ import vn.lgsp.fw.app.cmon.domain.entity.BaseEntity;
 public class BaseServiceImpl<T extends BaseEntity<T>> implements BaseService<T>{
 
 	@Override
-	public List<T> getAll() {
+	public List<T> findAll() {
 		return null;
 	}
 
 	@Override
-	public List<T> getAll(Pageable pageable) {
+	public List<T> findAll(Pageable pageable) {
 		return null;
 	}
 	
 	@Override
-	public Page<T> findAllWithPaging(Pageable pageable) {
+	public Page<T> findPage(Pageable pageable) {
 		return null;
 	}
 	
 	@Override
-	public T getOne(Long id) {
+	public T findOneById(Long id) {
 		return null;
 	}
 

@@ -1,5 +1,8 @@
 package vn.lgsp.fw.app.cmon.web.rest.donvihanhchinh;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.hateoas.Link;
@@ -8,9 +11,6 @@ import org.springframework.stereotype.Component;
 
 import vn.lgsp.fw.app.cmon.domain.entity.CmonDonViHanhChinh;
 import vn.lgsp.fw.app.cmon.web.rest.exception.EntityNotFoundException;
-
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @Component
 public class CmonDonViHanhChinhResourceAssembler extends ResourceAssemblerSupport<CmonDonViHanhChinh, CmonDonViHanhChinhResource>{

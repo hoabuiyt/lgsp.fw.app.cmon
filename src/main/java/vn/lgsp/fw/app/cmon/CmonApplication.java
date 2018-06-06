@@ -20,7 +20,6 @@ import vn.lgsp.fw.app.cmon.web.rest.BaseRestController;
 @ComponentScan(basePackageClasses = { BaseServiceImpl.class, BaseRestController.class, ZkController.class })
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @SpringBootApplication
-//@EnableWebMvc
 public class CmonApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {

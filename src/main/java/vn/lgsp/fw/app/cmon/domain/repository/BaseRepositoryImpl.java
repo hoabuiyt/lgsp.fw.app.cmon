@@ -22,7 +22,6 @@ import org.springframework.data.querydsl.QSort;
 import org.springframework.data.querydsl.SimpleEntityPathResolver;
 import org.springframework.data.repository.support.PageableExecutionUtils;
 import org.springframework.data.repository.support.PageableExecutionUtils.TotalSupplier;
-import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.util.SystemPropertyUtils;
 
 import com.querydsl.core.types.EntityPath;
@@ -65,7 +64,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
 	}
 
 	@Override
-	public Page<T> findAllPageResult(Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders) {
+	public Page<T> findPageByPredicate(Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders) {
 		final JPQLQuery<?> countQuery = createCountQuery(predicate);
 		JPQLQuery<T> query = querydsl.applyPagination(pageable, createQuery(predicate).select(path));
 		
@@ -82,7 +81,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
 	}
 
 	@Override
-	public List<T> findAllListResult(Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders) {
+	public List<T> findAllByPredicate(Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders) {
 		JPQLQuery<T> query = querydsl.applyPagination(pageable, createQuery(predicate).select(path));
 		
 		Sort sort = new QSort(orders);
@@ -94,7 +93,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
 	}
 
 	@Override
-	public T findById(Long id) {
+	public T findOneById(Long id) {
 		EntityPath<?> ePath = getEntityPath();
 		final JPAQuery<T> query = getQuery(ePath);
 		query.where(Expressions.numberPath(Long.class, ePath, "id").eq(id));
@@ -102,8 +101,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
 	}
 
 	@Override
-	public boolean exists(ID id) {
-		System.out.println(id);
+	public boolean existsById(ID id) {
 		EntityPath<?> ePath = getEntityPath();
 		final JPAQuery<T> query = getQuery(ePath);
 		query.where(Expressions.numberPath(Long.class, ePath, "id").eq((Long)id));

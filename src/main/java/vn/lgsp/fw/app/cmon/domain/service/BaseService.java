@@ -10,19 +10,19 @@ import vn.lgsp.fw.app.cmon.web.rest.exception.EntityNotFoundException;
 import vn.lgsp.fw.app.cmon.web.rest.exception.UpdateEntityMismatchException;
 
 public interface BaseService<T extends BaseEntity<T>> {
-
-	List<T> getAll();
 	
-	List<T> getAll(Pageable pageable);
+	List<T> findAll();
 	
-	Page<T> findAllWithPaging(Pageable pageable);
+	List<T> findAll(Pageable pageable);
 	
-	T getOne(Long id) throws EntityNotFoundException;
+	Page<T> findPage(Pageable pageable);
+	
+	T findOneById(Long id) throws EntityNotFoundException;
 
 	T save(T ethnicity);
 
 	T update(Long id, T ethnicity) throws EntityNotFoundException, UpdateEntityMismatchException;
 
 	void delete(Long id) throws EntityNotFoundException;
-
+	
 }

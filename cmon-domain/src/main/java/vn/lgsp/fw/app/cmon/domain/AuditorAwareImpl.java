@@ -1,4 +1,4 @@
-package vn.lgsp.fw.app.cmon.domain.entity;
+package vn.lgsp.fw.app.cmon.domain;
 
 import org.springframework.data.domain.AuditorAware;
 

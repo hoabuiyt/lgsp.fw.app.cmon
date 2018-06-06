@@ -28,12 +28,12 @@ public interface BaseRepository<T,ID extends Serializable> extends JpaRepository
 
 	Class<T> getDomainClass();	
 	
-	Page<T> findAllPageResult(Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders);
+	Page<T> findPageByPredicate(Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders);
 	
-	List<T> findAllListResult(Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders);
+	List<T> findAllByPredicate(Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders);
 	
-	T findById(@Param("id") Long id);
+	T findOneById(@Param("id") Long id);
 
-	boolean exists(ID id);
+	boolean existsById(ID id);
 	
 }

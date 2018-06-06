@@ -35,29 +35,29 @@ public class CmonDonViHanhChinhServiceImpl implements CmonDonViHanhChinhService 
 	CmonDonViHanhChinhRepository repository;
 	
 	@Override
-	public List<CmonDonViHanhChinh> getAll(){
-		List<CmonDonViHanhChinh> list = repository.findAllListResult(base, null, new OrderSpecifier<>(
+	public List<CmonDonViHanhChinh> findAll(){
+		List<CmonDonViHanhChinh> list = repository.findAllByPredicate(base, null, new OrderSpecifier<>(
 				Order.DESC, Expressions.dateTimePath(LocalDateTime.class, CMON_DVHC, "ngaySua")));
 		return list;
 	}
 	
 	@Override
-	public List<CmonDonViHanhChinh> getAll(Pageable pageable){
-		List<CmonDonViHanhChinh> list = repository.findAllListResult(base, pageable, new OrderSpecifier<>(
+	public List<CmonDonViHanhChinh> findAll(Pageable pageable){
+		List<CmonDonViHanhChinh> list = repository.findAllByPredicate(base, pageable, new OrderSpecifier<>(
 				Order.DESC, Expressions.dateTimePath(LocalDateTime.class, CMON_DVHC, "ngaySua")));
 		return list;
 	}
 
 	@Override
-	public Page<CmonDonViHanhChinh> findAllWithPaging(Pageable pageable) {
-		Page<CmonDonViHanhChinh> page = repository.findAllPageResult(base, pageable, new OrderSpecifier<>(
+	public Page<CmonDonViHanhChinh> findPage(Pageable pageable) {
+		Page<CmonDonViHanhChinh> page = repository.findPageByPredicate(base, pageable, new OrderSpecifier<>(
 				Order.DESC, Expressions.dateTimePath(LocalDateTime.class, CMON_DVHC, "ngaySua")));
 		return page;
 	}
 	
 	@Override
-	public CmonDonViHanhChinh getOne(Long id) throws EntityNotFoundException {
-		CmonDonViHanhChinh entity = repository.findById(id);
+	public CmonDonViHanhChinh findOneById(Long id) throws EntityNotFoundException {
+		CmonDonViHanhChinh entity = repository.findOneById(id);
 		if (entity == null) {
 			throw new EntityNotFoundException(CmonDonViHanhChinh.class, "id", id.toString());
 		}
@@ -93,7 +93,7 @@ public class CmonDonViHanhChinhServiceImpl implements CmonDonViHanhChinhService 
 		}
 	}
 	
-	public Page<CmonDonViHanhChinh> findAllWithPaging(BaseSearchCriteria search, Pageable pageable) {
+	public Page<CmonDonViHanhChinh> findPageBySearchCriteria(BaseSearchCriteria search, Pageable pageable) {
 		return repository.findAll(predicateFindAll(search), pageable);
 	}
 	

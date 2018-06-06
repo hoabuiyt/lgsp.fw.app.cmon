@@ -6,7 +6,7 @@
 	<groupId>vn.lgsp.fw.app</groupId>
 	<artifactId>cmon</artifactId>
 	<version>1.0.0</version>
-	<packaging>war</packaging>
+	<packaging>pom</packaging>
 
 	<name>LGSP Application Framework for Java - Danh muc dung chung</name>
 	<description>LGSP Application Framework for Java - Danh muc dung chung</description>
@@ -155,12 +155,13 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<!-- <configuration>
-					<addResources>true</addResources>
-				</configuration> -->
 			</plugin>
 		</plugins>
 	</build>
-
-
+	<modules>
+		<module>cmon-domain</module>
+		<module>cmon-web</module>
+		<module>cmon-env</module>
+		<module>cmon-rest</module>
+	</modules>
 </project>

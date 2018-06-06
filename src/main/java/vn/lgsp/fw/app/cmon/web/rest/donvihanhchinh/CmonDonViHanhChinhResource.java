@@ -17,9 +17,9 @@ public class CmonDonViHanhChinhResource extends BaseResource<CmonDonViHanhChinh>
 	}
 	
 	@JsonProperty("cha")
-    public CmonDonViHanhChinhResource getCha() {
+    public CmonDonViHanhChinh getCha() {
 		if(entity.getCha()!=null) {
-			return new CmonDonViHanhChinhResource(entity.getCha());
+			return entity.getCha();
 		}
 		return null;
     }

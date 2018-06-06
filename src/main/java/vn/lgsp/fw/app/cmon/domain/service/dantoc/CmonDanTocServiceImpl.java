@@ -35,29 +35,29 @@ public class CmonDanTocServiceImpl implements CmonDanTocService {
 	CmonDanTocRepository repository;
 
 	@Override
-	public List<CmonDanToc> getAll(){
-		List<CmonDanToc> list = repository.findAllListResult(base, null, new OrderSpecifier<>(
+	public List<CmonDanToc> findAll(){
+		List<CmonDanToc> list = repository.findAllByPredicate(base, null, new OrderSpecifier<>(
 				Order.DESC, Expressions.dateTimePath(LocalDateTime.class, CMON_DANTOC, "ngaySua")));
 		return list;
 	}
 	
 	@Override
-	public List<CmonDanToc> getAll(Pageable pageable){
-		List<CmonDanToc> list = repository.findAllListResult(base, pageable, new OrderSpecifier<>(
+	public List<CmonDanToc> findAll(Pageable pageable){
+		List<CmonDanToc> list = repository.findAllByPredicate(base, pageable, new OrderSpecifier<>(
 				Order.DESC, Expressions.dateTimePath(LocalDateTime.class, CMON_DANTOC, "ngaySua")));
 		return list;
 	}
 
 	@Override
-	public Page<CmonDanToc> findAllWithPaging(Pageable pageable) {
-		Page<CmonDanToc> page = repository.findAllPageResult(base, pageable, new OrderSpecifier<>(
+	public Page<CmonDanToc> findPage(Pageable pageable) {
+		Page<CmonDanToc> page = repository.findPageByPredicate(base, pageable, new OrderSpecifier<>(
 				Order.DESC, Expressions.dateTimePath(LocalDateTime.class, CMON_DANTOC, "ngaySua")));
 		return page;
 	}
 	
 	@Override
-	public CmonDanToc getOne(Long id) throws EntityNotFoundException {
-		CmonDanToc entity = repository.findById(id);
+	public CmonDanToc findOneById(Long id) throws EntityNotFoundException {
+		CmonDanToc entity = repository.findOneById(id);
 		if (entity == null) {
 			throw new EntityNotFoundException(CmonDanToc.class, "id", id.toString());
 		}
@@ -92,7 +92,7 @@ public class CmonDanTocServiceImpl implements CmonDanTocService {
 		}
 	}
 
-	public Page<CmonDanToc> findAllWithPaging(CmonDanTocSearchCriteria search, Pageable pageable) {
+	public Page<CmonDanToc> findPageBySearchCriteria(CmonDanTocSearchCriteria search, Pageable pageable) {
 		return repository.findAll(predicateFindAll(search), pageable);
 	}
 
