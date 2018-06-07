@@ -3,7 +3,11 @@ package vn.lgsp.fw.app.cmon.web.rest.dantoc;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.ExposesResourceFor;
+import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,15 +18,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import vn.lgsp.fw.app.cmon.domain.entity.CmonDanToc;
+import vn.lgsp.fw.app.cmon.domain.repository.BaseRepository;
 import vn.lgsp.fw.app.cmon.domain.service.dantoc.CmonDanTocService;
 import vn.lgsp.fw.app.cmon.web.rest.BaseRestController;
+import vn.lgsp.fw.app.cmon.web.rest.donvihanhchinh.CmonDonViHanhChinhResource;
 import vn.lgsp.fw.app.cmon.web.rest.exception.EntityNotFoundException;
 import vn.lgsp.fw.app.cmon.web.rest.exception.UpdateEntityMismatchException;
 
-@RestController
+@RepositoryRestController
 @ExposesResourceFor(CmonDanToc.class)
 @RequestMapping(path = "/rest/cmonDanTocs", produces = MediaType.APPLICATION_JSON_VALUE)
-public class CmonDanTocRestController extends BaseRestController {
+public class CmonDanTocRestController extends BaseRestController<CmonDanToc> {
+
+	@Autowired
+	public CmonDanTocRestController(BaseRepository<CmonDanToc, Long> repo) {
+		super(repo);
+	}
 
 	@Autowired
 	CmonDanTocService service;
@@ -31,12 +42,9 @@ public class CmonDanTocRestController extends BaseRestController {
 	CmonDanTocResourceAssembler assembler;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<CmonDanTocResource>> loadAll() {
-		List<CmonDanToc> list = service.getAll();
-		if(list.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}
-		return ResponseEntity.ok(assembler.toResources(list));
+	public ResponseEntity<PagedResources<CmonDanTocResource>> loadAll(Pageable pageable) {
+		Page<CmonDanToc> list = service.findAllWithPaging(pageable);
+		return ResponseEntity.ok(pageAssembler.toResource(list, assembler));
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")

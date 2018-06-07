@@ -90,15 +90,6 @@ public class CmonDonViHanhChinhVM {
 		return caps;
 	}
 
-	public DefaultTreeModel<CmonDonViHanhChinh> getTreeDonViHanhChinh() {
-		CmonDonViHanhChinh nodeGoc = new CmonDonViHanhChinh();
-		DefaultTreeModel<CmonDonViHanhChinh> tree = new DefaultTreeModel<>(nodeGoc.getNode(), true);
-		for (CmonDonViHanhChinh cat : getDsDonViHanhChinhs()) {
-			nodeGoc.getNode().add(cat.getNode());
-		}
-		return tree;
-	}
-
 	public List<CmonDonViHanhChinh> getDsDonViHanhChinhs() {
 		DefaultApi defaultApi = new DefaultApi();
 		ApiClient apiClient = defaultApi.getApiClient();

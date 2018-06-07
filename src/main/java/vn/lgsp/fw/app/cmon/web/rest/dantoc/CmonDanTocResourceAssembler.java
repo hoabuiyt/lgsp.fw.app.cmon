@@ -14,10 +14,6 @@ public class CmonDanTocResourceAssembler extends ResourceAssemblerSupport<CmonDa
 	@Autowired
     protected EntityLinks entityLinks;
 	
-	//TODO add REL ENUM
-	//private static final String UPDATE_REL = "update";
-    //private static final String DELETE_REL = "delete";
-    
 	public CmonDanTocResourceAssembler() {
 		super(CmonDanTocRestController.class, CmonDanTocResource.class);
 	}
@@ -27,8 +23,6 @@ public class CmonDanTocResourceAssembler extends ResourceAssemblerSupport<CmonDa
 		CmonDanTocResource resource = new CmonDanTocResource(entity);
 		final Link selfLink = entityLinks.linkToSingleResource(entity);
         resource.add(selfLink.withSelfRel());
-        //resource.add(selfLink.withRel(UPDATE_REL));
-        //resource.add(selfLink.withRel(DELETE_REL));
 		return resource;
 	}
 

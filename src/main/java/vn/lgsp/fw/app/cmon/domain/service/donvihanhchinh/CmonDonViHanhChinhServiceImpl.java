@@ -40,7 +40,21 @@ public class CmonDonViHanhChinhServiceImpl implements CmonDonViHanhChinhService 
 				Order.DESC, Expressions.dateTimePath(LocalDateTime.class, CMON_DVHC, "ngaySua")));
 		return list;
 	}
+	
+	@Override
+	public List<CmonDonViHanhChinh> getAll(Pageable pageable){
+		List<CmonDonViHanhChinh> list = repository.findAllListResult(base, pageable, new OrderSpecifier<>(
+				Order.DESC, Expressions.dateTimePath(LocalDateTime.class, CMON_DVHC, "ngaySua")));
+		return list;
+	}
 
+	@Override
+	public Page<CmonDonViHanhChinh> findAllWithPaging(Pageable pageable) {
+		Page<CmonDonViHanhChinh> page = repository.findAllPageResult(base, pageable, new OrderSpecifier<>(
+				Order.DESC, Expressions.dateTimePath(LocalDateTime.class, CMON_DVHC, "ngaySua")));
+		return page;
+	}
+	
 	@Override
 	public CmonDonViHanhChinh getOne(Long id) throws EntityNotFoundException {
 		CmonDonViHanhChinh entity = repository.findById(id);
@@ -96,5 +110,12 @@ public class CmonDonViHanhChinhServiceImpl implements CmonDonViHanhChinhService 
 		}
 		return predicate;
 	}
+
+	@Override
+	public List<CmonDonViHanhChinh> findAllDonViHanhChinhChildren(Long id) {
+		return repository.findAllDonViHanhChinhChildren(id);
+	}
+
+	
 
 }
