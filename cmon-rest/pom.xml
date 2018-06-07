@@ -12,10 +12,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>vn.lgsp.fw.app</groupId>
-			<artifactId>cmon-env</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>vn.lgsp.fw.app</groupId>
 			<artifactId>cmon-domain</artifactId>
 		</dependency>
 	</dependencies>

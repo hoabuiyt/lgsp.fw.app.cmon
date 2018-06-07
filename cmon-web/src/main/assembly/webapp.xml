@@ -8,12 +8,12 @@
 	</formats>
 	<fileSets>
 		<fileSet>
-			<directory>${project.basedir}/src/main/java</directory>
-			<outputDirectory>/${project.artifactId}/src</outputDirectory>
+			<directory>src/main/java</directory>
+			<outputDirectory>src</outputDirectory>
 		</fileSet>
 		<fileSet>
-			<directory>${project.basedir}/src/main/webapp</directory>
-			<outputDirectory>/${project.artifactId}/WebContent</outputDirectory>
+			<directory>src/main/webapp</directory>
+			<outputDirectory>WebContent</outputDirectory>
 		</fileSet>
 	</fileSets>
 	<files>

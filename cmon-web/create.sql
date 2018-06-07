@@ -1,0 +1,9 @@
+create table app_nguoidung (id bigint not null auto_increment, ngaySua datetime, ngayTao datetime, nguoiSua varchar(255), nguoiTao varchar(255), deleted bit not null, active bit not null, email varchar(255) not null, hoVaTen varchar(255) not null, matKhau varchar(255) not null, salkey varchar(255), primary key (id)) ENGINE=InnoDB
+create table app_nguoidung_vaitro (nguoidung_id bigint not null, vaitro_id bigint not null, primary key (nguoidung_id, vaitro_id)) ENGINE=InnoDB
+create table app_quyen (id bigint not null auto_increment, ngaySua datetime, ngayTao datetime, nguoiSua varchar(255), nguoiTao varchar(255), deleted bit not null, ten varchar(255) not null, primary key (id)) ENGINE=InnoDB
+create table app_vaitro (id bigint not null auto_increment, ngaySua datetime, ngayTao datetime, nguoiSua varchar(255), nguoiTao varchar(255), deleted bit not null, ten varchar(255) not null, primary key (id)) ENGINE=InnoDB
+create table cmon_dantoc (id bigint not null auto_increment, ngaySua datetime, ngayTao datetime, nguoiSua varchar(255), nguoiTao varchar(255), deleted bit not null, ma varchar(255), ten varchar(255), primary key (id)) ENGINE=InnoDB
+create table cmon_donvihanhchinh (id bigint not null auto_increment, ngaySua datetime, ngayTao datetime, nguoiSua varchar(255), nguoiTao varchar(255), deleted bit not null, ma varchar(255), ten varchar(255), cap varchar(255), cha_id bigint, primary key (id)) ENGINE=InnoDB
+alter table app_nguoidung_vaitro add constraint FKntym6shminupjfsc9hq2043q7 foreign key (vaitro_id) references app_vaitro (id)
+alter table app_nguoidung_vaitro add constraint FK7iadr4p8o3ft0r5lp51ygmcm2 foreign key (nguoidung_id) references app_nguoidung (id)
+alter table cmon_donvihanhchinh add constraint FKs5aarwu790304a8qm15vgwpuf foreign key (cha_id) references cmon_donvihanhchinh (id)

@@ -1,27 +1,29 @@
-package vn.lgsp.fw.app.cmon.domain;
+package vn.lgsp.fw.app.cmon;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import vn.lgsp.fw.app.cmon.domain.AuditorAwareImpl;
 import vn.lgsp.fw.app.cmon.domain.repository.BaseRepositoryImpl;
-import vn.lgsp.fw.app.cmon.domain.service.BaseServiceImpl;
 
-//@EnableJpaRepositories(repositoryBaseClass = BaseRepositoryImpl.class)
+@EnableJpaRepositories(repositoryBaseClass = BaseRepositoryImpl.class)
 //@ComponentScan(basePackageClasses = { BaseServiceImpl.class })
-//@EnableJpaAuditing(auditorAwareRef = "auditorAware")
-//@SpringBootApplication
-//@PropertySource("classpath*:META-INF/env-config.properties")
-public class Application /*extends SpringBootServletInitializer*/{
+@EnableJpaAuditing(auditorAwareRef = "auditorAware")
+@SpringBootApplication
+public class Application extends SpringBootServletInitializer{
 
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
 	
@@ -33,6 +35,11 @@ public class Application /*extends SpringBootServletInitializer*/{
 	@Bean
     public AuditorAware<String> auditorAware() {
         return new AuditorAwareImpl();
-    }*/
-
+    }
+	
+	@Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
 }
+

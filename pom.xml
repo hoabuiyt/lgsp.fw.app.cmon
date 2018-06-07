@@ -32,7 +32,7 @@
 			</dependency>
 			<dependency>
 				<groupId>vn.lgsp.fw.app</groupId>
-				<artifactId>cmon-env</artifactId>
+				<artifactId>cmon-rest</artifactId>
 				<version>1.0.0</version>
 			</dependency>
 		</dependencies>
@@ -149,7 +149,7 @@
 	<modules>
 		<module>cmon-domain</module>
 		<module>cmon-web</module>
-		<module>cmon-env</module>
+		
 		<module>cmon-rest</module>
 	</modules>
 </project>
