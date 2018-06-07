@@ -3,7 +3,7 @@
 	closable="true" title="Tạo mới đơn vị hành chính"
 	validationMessages="@id('vmsgs')" width="500px"
 	viewModel="@id('v') @init(execution.arg.model)"
-	form="@id('fx') @load(wdn.attributes.v.entity) @save(wdn.attributes.v.entity, before='save') @validator(self.attributes.v.formValidator)">
+	form="@id('fx') @load(execution.arg.model) @save(execution.arg.model, before='save') @validator(self.attributes.v.formValidator)">
 	
 	<div class="row box-body">
 		<div class="col-md-12">

@@ -1,5 +1,6 @@
 package vn.lgsp.fw.app.cmon.domain.entity;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,16 +13,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.zkoss.zul.DefaultTreeNode;
+import org.zkoss.zul.TreeNode;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 import vn.lgsp.fw.app.cmon.domain.enums.ECapDonViHanhChinh;
-
 /**
  * Danh muc Don Vi Hanh Chinh
  * @author caltalys
@@ -50,4 +52,17 @@ public class CmonDonViHanhChinh extends ADanhMuc<CmonDonViHanhChinh>{
 	@JoinColumn(name = "cha_id")
 	private List<CmonDonViHanhChinh> children = new LinkedList<CmonDonViHanhChinh>();
 	
+	public CmonDonViHanhChinh() {};
+	public CmonDonViHanhChinh(String ten, ECapDonViHanhChinh cap) {
+		this.setTen(ten);
+		this.setCap(cap);
+	}
+	
+	private transient final TreeNode<CmonDonViHanhChinh> node = new DefaultTreeNode<>(this,
+			new ArrayList<DefaultTreeNode<CmonDonViHanhChinh>>());
+
+	@Transient
+	public TreeNode<CmonDonViHanhChinh> getNode() {
+		return node;
+	}
 }

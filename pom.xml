@@ -17,12 +17,18 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<!-- <properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
-	</properties> -->
-
+	<!-- <properties> <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> 
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding> 
+		<java.version>1.8</java.version> </properties> -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				<version>2.8.1</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
 		<!-- == Begin Springframework== -->
 		<dependency>
@@ -63,7 +69,7 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- == End Springframework== -->
-		
+
 		<!-- == Begin ZK== -->
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
@@ -84,7 +90,7 @@
 			<artifactId>zkbind</artifactId>
 		</dependency>
 		<!-- == End ZK== -->
-		
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -94,8 +100,8 @@
 			<groupId>org.mariadb.jdbc</groupId>
 			<artifactId>mariadb-java-client</artifactId>
 		</dependency>
-		
-		<!-- QueryDSL support -->		
+
+		<!-- QueryDSL support -->
 		<dependency>
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-apt</artifactId>
@@ -104,56 +110,66 @@
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-jpa</artifactId>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-lang3</artifactId>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
 		</dependency>
-		
-		<!--Begin support for Java 8 date/time types in JPA-Hibernate & JSON (specified in JSR-310 specification) -->
+
+		<!--Begin support for Java 8 date/time types in JPA-Hibernate & JSON (specified 
+			in JSR-310 specification) -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-java8</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>com.fasterxml.jackson.datatype</groupId>
-		    <artifactId>jackson-datatype-jsr310</artifactId>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
 		</dependency>
 		<!--End support for Java 8 date/time types -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.wso2</groupId>
+			<artifactId>org.wso2.client.Administrative</artifactId>
+			<version>1.0.0</version>
+			<scope>compile</scope>
+		</dependency>
 		
 	</dependencies>
 
 	<build>
 		<resources>
-            <resource>
-                <directory>src/main/webapp</directory>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
+			<resource>
+				<directory>src/main/webapp</directory>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
-			    <groupId>com.mysema.maven</groupId>
-			    <artifactId>apt-maven-plugin</artifactId>
-			    <executions>
-			        <execution>
-			            <goals>
-			                <goal>process</goal>
-			            </goals>
-			            <configuration>
-			                <outputDirectory>target/generated-sources/annotations</outputDirectory>
-			                <processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
-			            </configuration>
-			        </execution>
-			    </executions>
+				<groupId>com.mysema.maven</groupId>
+				<artifactId>apt-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>process</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/generated-sources/annotations</outputDirectory>
+							<processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<!-- <configuration>
-					<addResources>true</addResources>
-				</configuration> -->
+				<!-- <configuration> <addResources>true</addResources> </configuration> -->
 			</plugin>
 		</plugins>
 	</build>
