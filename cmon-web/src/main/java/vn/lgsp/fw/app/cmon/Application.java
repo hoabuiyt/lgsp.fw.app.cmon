@@ -18,7 +18,6 @@ import vn.lgsp.fw.app.cmon.domain.AuditorAwareImpl;
 import vn.lgsp.fw.app.cmon.domain.repository.BaseRepositoryImpl;
 
 @EnableJpaRepositories(repositoryBaseClass = BaseRepositoryImpl.class)
-//@ComponentScan(basePackageClasses = { BaseServiceImpl.class })
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer{

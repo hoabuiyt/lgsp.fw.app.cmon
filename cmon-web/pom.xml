@@ -94,6 +94,18 @@
 			<artifactId>commons-io</artifactId>
 			<version>${commons-io}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			</dependency>
+		<dependency>
+			<groupId>org.wso2</groupId>
+			<artifactId>org.wso2.client.Administrative</artifactId>
+			<version>1.0.0</version>
+			<scope>system</scope>
+    		<systemPath>${basedir}/src/main/webapp/lib/org.wso2.client.Administrative-1.0.0.jar</systemPath>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -105,6 +117,28 @@
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>org.wso2:org.wso2.client.Administrative</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+						<configuration>
+							<groupId>org.wso2</groupId>
+							<artifactId>org.wso2.client.Administrative</artifactId>
+							<version>1.0.0</version>
+							<packaging>jar</packaging>
+							<file>src/main/webapp/lib/org.wso2.client.Administrative-1.0.0.jar</file>
+							<createChecksum>true</createChecksum>
+							<generatePom>true</generatePom>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<!-- Build war -->
 			<plugin>

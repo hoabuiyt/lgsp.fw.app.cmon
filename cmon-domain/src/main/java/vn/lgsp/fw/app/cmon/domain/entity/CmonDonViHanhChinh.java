@@ -42,5 +42,10 @@ public class CmonDonViHanhChinh extends ADanhMuc<CmonDonViHanhChinh>{
 	@JsonBackReference
 	private CmonDonViHanhChinh cha;
 	
-
+	public CmonDonViHanhChinh() {};
+	public CmonDonViHanhChinh(String ten, ECapDonViHanhChinh cap) {
+		this.setTen(ten);
+		this.setCap(cap);
+	}
+	
 }

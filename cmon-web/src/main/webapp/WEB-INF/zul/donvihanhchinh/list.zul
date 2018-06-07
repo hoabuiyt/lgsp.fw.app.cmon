@@ -1,0 +1,101 @@
+<?page contentType="text/html;charset=UTF-8"?>
+<zk>
+	<div xmlns:zk="zk" xmlns:n="native" xmlns:x="xhtml"
+		viewModel="@id('vm') @init('vn.lgsp.fw.app.cmon.web.vm.CmonDonViHanhChinhVM')">
+		<zscript><![CDATA[
+		self.page.title= "Quản lý đơn vị hành chính";
+	]]></zscript>
+	<style>
+		.z-treecol-content, .z-column-content{
+			color: #333;
+		}
+	</style>
+	<n:section class="content-header">
+		<n:h1 class="header-title">Danh mục đơn vị hành chính</n:h1>
+	</n:section>
+	<n:section class="content">
+	    <n:div class="row">
+	    	<n:div class="col-md-12">
+		    	<n:div class="box box-info margin-box">
+		    		<n:div class="box-header">
+		    			<n:h3 class="box-title">Tìm kiếm</n:h3>
+	    				<n:div class="box-tools pull-right">
+	    					<n:button type="button" class="btn btn-box-tool" data-widget="collapse"><n:i class="fa fa-minus"></n:i></n:button>
+	    				</n:div>	    				
+	    			</n:div>
+	    			<n:div class="box-body">
+	    				<n:div class="row">
+	    					<n:div class="col-md-3">
+		    					<n:div class="form-group" >
+		    						<x:label class="control-label">Từ khóa</x:label>
+									<textbox class="form-control"
+										style="width:99%;display:inline;" placeholder="Nhập tên" />
+								</n:div>
+							</n:div>
+							<n:div class="col-md-3">
+	    						<x:label class="control-label">&#160;</x:label>
+	    						<n:div class="form-group">
+									<x:button class="btn btn-warning" type="button">
+										<n:i class="fa fa-search"></n:i> TÌM KIẾM
+									</x:button>
+	    						</n:div>
+	    					</n:div>
+	    				</n:div>
+		    		</n:div>
+		    	</n:div>
+	    	</n:div>
+	    		<!-- /.box-header -->
+   			<n:div class="col-md-12">
+    			<n:div class="box box-success">
+    				<n:div class="box-header">
+	    				<n:h3 class="box-title"></n:h3>
+	    				<n:div class="box-tools pull-right">
+	    					<x:button class="btn btn-success" onClick="@command('redirectPage', zul='donvihanhchinh/add.zul', vmArgs=vm, vm=vm.entity)">
+    							<n:i class="fa fa-plus"></n:i>&#160;&#160;Thêm mới
+    						</x:button>
+	    				</n:div>
+	    			</n:div>
+	    			<n:div class="box-body">
+    					<n:div class="dataTables_wrapper form-inline dt-bootstrap">
+    						<n:div class="row">
+    							<div zclass="col-md-12">
+    								<tree id="tree" model="@bind(vm.model)" rows="11">
+										<treecols sizable="false">
+											<treecol label="Tên"></treecol>
+											<treecol label="Thao tác" width="160px"></treecol>
+										</treecols>
+										<template name="model" var="node">
+											<treeitem onOpen="@command('loadChild')" viewModel="@id('vmchild') @init(node)">
+												<treerow>
+													<treecell>
+														<label value="@load(vmchild.data.name)"></label>
+													</treecell>
+													
+													<treecell>
+														<x:button class="btn btn-success btn-xs" title="Thêm con">
+															<n:i class="fa fa-plus"></n:i> 
+														</x:button>
+														<x:button class="btn btn-info btn-xs" title="Sửa">
+															<n:i class="fa fa-edit"></n:i>
+														</x:button>
+														<x:a class="btn btn-info btn-xs">
+															<n:i class="fa fa-eye"></n:i>
+														</x:a>
+														<x:a class="btn btn-danger btn-xs">
+															<n:i class="fa fa-trash-o"></n:i>
+														</x:a>
+													</treecell>
+												</treerow>
+											</treeitem>
+										</template>
+									</tree>
+    							</div>
+    						</n:div>
+    					</n:div>
+    				</n:div>
+   				</n:div>
+   			</n:div>    
+	    </n:div>
+	</n:section>
+</div>
+</zk>

@@ -1,0 +1,55 @@
+<window xmlns:n="native" xmlns:x="xhtml" xmlns:zk="zk" xmlns:w="client"
+	id="wdn" border="normal" mode="modal" contentStyle="overflow:auto;"
+	closable="true" title="Tạo mới đơn vị hành chính"
+	validationMessages="@id('vmsgs')" width="500px"
+	viewModel="@id('v') @init(execution.arg.model)"
+	form="@id('fx') @load(execution.arg.model) @save(execution.arg.model, before='save') @validator(self.attributes.v.formValidator)">
+	
+	<div class="row box-body">
+		<div class="col-md-12">
+			<div class="form-group">
+				<x:label>
+					Cấp
+					<n:small class="required">*</n:small>
+				</x:label>
+				<combobox width="100%" placeholder="Chọn cấp"
+					model="@load(v.capDonViHanhChinhs)" selectedItem="@bind(fx.cap)">
+					<template name="model">
+						<comboitem
+							label="@load(each ne null ? each.tenCap : '--- Chọn cấp ---')" />
+					</template>
+				</combobox>
+				<label class="error" value="@load(vmsgs['cap'])" />
+			</div>
+			<div class="form-group">
+				<x:label>
+					Tên
+					<n:small class="required">*</n:small>
+				</x:label>
+				<textbox width="100%" maxlength="150"
+					class="form-control" value="@bind(fx.ten)" />
+				<label class="error" value="@load(vmsgs['ten'])" />
+			</div>
+			<div class="form-group">
+				<x:label>
+					Mã
+					<n:small class="required">*</n:small>
+				</x:label>
+				<textbox width="100%" maxlength="150"
+					class="form-control" value="@bind(fx.ma)" />
+				<label class="error" value="@load(vmsgs['ma'])" />
+			</div>
+		</div>
+	</div>
+	
+	<div class="row box-footer">
+		<x:button class="btn btn-success" style="margin-right: 10px;"
+			onClick="@command('save', wdn=wdn)">
+			<n:i class="fa fa-save"></n:i>
+			&#160;&#160;Lưu
+		</x:button>
+		<x:button class="btn btn-default" zk:onClick="wdn.detach()">
+			Hủy
+		</x:button>
+	</div>
+</window>
