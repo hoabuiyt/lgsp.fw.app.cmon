@@ -1,8 +1,15 @@
 package vn.lgsp.fw.app.cmon.domain.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -31,4 +38,8 @@ public class VaiTro extends BaseEntity<VaiTro>{
 	@NotBlank
 	@Size(max=255)
 	private String ten = "";
+	
+	@ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+	@CollectionTable(name = "app_vaitro_quyen", joinColumns = { @JoinColumn(name = "vaitro_id") })
+	private Set<String> quyens = new HashSet<>();
 }

@@ -1,34 +1,59 @@
 package vn.lgsp.fw.app.cmon.domain.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import java.util.HashMap;
 
-import org.hibernate.validator.constraints.NotBlank;
+import org.apache.shiro.realm.AuthorizingRealm;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import vn.lgsp.fw.app.cmon.domain.BaseEntity;
+public class Quyen extends HashMap<String, Boolean> {
 
-/**
- * Danh muc Don Vi Hanh Chinh
- * @author caltalys
- *
- */
-@Entity
-@Table(name="app_quyen")
-@Data
-@ToString
-@EqualsAndHashCode(callSuper=true)	
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Quyen extends BaseEntity<Quyen>{
-	
-	private static final long serialVersionUID = 1155044909219354638L;
-	
-	@NotBlank
-	@Size(max=255)
-	private String ten = "";
+	private static final long serialVersionUID = 1L;
+
+	public static final char CHAR_CACH = ':';
+	public static final String CACH = CHAR_CACH + "";
+
+	private long id;
+	private String resource = "";
+	@SuppressWarnings("unused")
+	private NguoiDung nguoiTao;
+
+	public Quyen(AuthorizingRealm realm_) {
+		realm = realm_;
+	}
+
+	public Quyen(AuthorizingRealm realm_, String resource_) {
+		this(realm_);
+		resource = resource_;
+	}
+
+	public Quyen(AuthorizingRealm realm_, String resource_, long id_, NguoiDung nguoiTao_) {
+		this(realm_, resource_);
+		resource = resource_;
+		id = id_;
+		nguoiTao = nguoiTao_;
+	}
+
+	private transient AuthorizingRealm realm;
+
+	public AuthorizingRealm getRealm() {
+		return realm;
+	}
+
+	@Override
+	public Boolean get(Object key_) {
+		System.out.println("key_:" + key_);
+		if (key_ == null) {
+			return false;
+		}
+		String key = key_.toString();
+		if (!key.isEmpty() && key.charAt(0) == '_') {
+			key = resource + key;
+		}
+		if (id != 0) {
+			key += CACH + id;
+		}
+		System.out.println("key:" + key);
+		boolean result = realm.isPermitted(null, key.replace('_', CHAR_CACH));
+		return result;
+	}
+
 }
