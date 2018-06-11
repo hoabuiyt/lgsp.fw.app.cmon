@@ -29,11 +29,6 @@
 			<name>ZK CE Repository</name>
 			<url>http://mavensync.zkoss.org/maven2</url>
 		</repository>
-		<repository>
-			<id>ZK EVAL</id>
-      		<name>ZK Evaluation Repository</name>
-			<url>http://mavensync.zkoss.org/eval</url>
-		</repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
@@ -48,10 +43,11 @@
 			<groupId>vn.lgsp.fw.app</groupId>
 			<artifactId>cmon-domain</artifactId>
 		</dependency>
-		<dependency>
+		<!-- Uncomment if using REST API -->
+		<!-- <dependency>
 			<groupId>vn.lgsp.fw.app</groupId>
 			<artifactId>cmon-rest</artifactId>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -108,14 +104,19 @@
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			</dependency>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
+		<dependency>
+		    <groupId>joda-time</groupId>
+		    <artifactId>joda-time</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.wso2</groupId>
 			<artifactId>org.wso2.client.Administrative</artifactId>
 			<version>1.0.0</version>
-			<scope>system</scope>
-    		<systemPath>${basedir}/src/main/webapp/lib/org.wso2.client.Administrative-1.0.0.jar</systemPath>
+    		<!-- <systemPath>${basedir}/src/main/webapp/lib/org.wso2.client.Administrative-1.0.0.jar</systemPath> -->
 		</dependency>
+		
 	</dependencies>
 	<build>
 		<plugins>
