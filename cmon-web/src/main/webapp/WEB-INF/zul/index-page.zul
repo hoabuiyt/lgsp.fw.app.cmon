@@ -31,6 +31,7 @@
 			String serverPort = execution.getServerPort() + "";
 			String urlImage = "http://" + serverName + ":" + serverPort + "/" + ctxPath;
 			String file = execution.getParameter("file");
+			System.out.println("file:"+file);
 		]]></zscript>
 		<div class="wrapper">
 			<n:header class="main-header">
