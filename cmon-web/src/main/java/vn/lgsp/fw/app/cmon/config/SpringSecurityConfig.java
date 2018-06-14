@@ -11,8 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import vn.lgsp.fw.app.cmon.web.AppAuthenticationSuccessHandler;
+
 @Configuration
-@EnableWebSecurity
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Override
@@ -33,21 +34,25 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
         return new InMemoryUserDetailsManager(users);
     }
     */
+	
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+	    web.ignoring().antMatchers("/backend/**");
+	}
+	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
         	.csrf().disable()
           .authorizeRequests()//.anyRequest().permitAll();
-          .antMatchers("/login*", "/zkau/**", "/backend/**").permitAll()
-          
+          .antMatchers("/login*","/zkau/**").permitAll()
           .anyRequest().authenticated()
           .and()
           .formLogin()
           .loginPage("/login")
           .usernameParameter("username")
           .passwordParameter("password")
-          .defaultSuccessUrl("/")
-          .failureUrl("/login?error=true")
+          .successHandler(new AppAuthenticationSuccessHandler())
           .and()
           .logout().logoutSuccessUrl("/login");
     }

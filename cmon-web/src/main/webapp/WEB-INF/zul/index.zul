@@ -25,6 +25,8 @@
 
 	<div class="hold-transition skin-blue sidebar-mini">
 		<zscript><![CDATA[
+			org.springframework.security.core.Authentication authentication = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+			System.out.println("authentication:"+authentication);
 			int testValue = 4;
 			String ctxPath = execution.getContextPath();
 			String serverName = execution.getServerName() + "";
@@ -38,7 +40,7 @@
 			    <!-- Logo -->
 			    <n:a href="${ctxPath}/cp/" class="logo hidden-xs">
 			    	<div class="bum-image">
-			    		<n:img src="${urlImage}/backend/assets/img/logoAD.tH2ifU" class="img-circle" alt="User Image" />
+			    		<n:img src="backend/assets/img/logoAD.tH2ifU" class="img-circle" alt="User Image" />
 			    	</div>
 			      	<!-- logo for regular state and mobile devices -->
 			      	<n:span class="logo-lg"><n:b>LGSP Quảng Nam</n:b></n:span>
@@ -58,13 +60,13 @@
 				          	<!-- User Account: style can be found in dropdown.less -->
 				          	<n:li class="dropdown user user-menu">
 					            <n:a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-					              	<n:img src="${urlImage}/backend/admin-lte/dist/img/user1-128x128.png" class="user-image" alt="User Image" />
+					              	<n:img src="backend/admin-lte/dist/img/user1-128x128.png" class="user-image" alt="User Image" />
 					              	<n:span class="hidden-xs">Nguyễn Văn A</n:span>
 					            </n:a>
 				            	<n:ul class="dropdown-menu">
 				              		<!-- User image -->
 				              		<n:li class="user-header">
-				                		<n:img src="${urlImage}/backend/admin-lte/dist/img/user1-128x128.png" class="img-circle" alt="User Image" />
+				                		<n:img src="backend/admin-lte/dist/img/user1-128x128.png" class="img-circle" alt="User Image" />
 				                		<n:p>Nguyễn Văn A</n:p>
 				                		<n:p>Chuyên viên</n:p>
 				              		</n:li>

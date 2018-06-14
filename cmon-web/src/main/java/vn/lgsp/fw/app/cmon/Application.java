@@ -5,22 +5,28 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.web.servlet.ViewResolver;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import vn.lgsp.fw.app.cmon.config.SpringSecurityConfig;
+import vn.lgsp.fw.app.cmon.config.WebMvcConfig;
 import vn.lgsp.fw.app.cmon.domain.AuditorAwareImpl;
 import vn.lgsp.fw.app.cmon.domain.repository.BaseRepositoryImpl;
+import vn.lgsp.fw.app.cmon.web.CacheFilter;
 
 @EnableJpaRepositories(repositoryBaseClass = BaseRepositoryImpl.class)
-@EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @EnableAutoConfiguration(exclude = SecurityAutoConfiguration.class)
+@EnableJpaAuditing(auditorAwareRef = "auditorAware")
+@EnableWebSecurity
+//@EnableWebMvc
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer{
 
@@ -42,14 +48,19 @@ public class Application extends SpringBootServletInitializer{
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
     }
-	/*
-	@Bean
-	public ViewResolver zulViewResolver() {
-		InternalResourceViewResolver resolver = new InternalResourceViewResolver("/WEB-INF/zul/",  ".zul");
-		resolver.setOrder(InternalResourceViewResolver.LOWEST_PRECEDENCE);
-		return resolver;
+
+	//@Bean
+	public FilterRegistrationBean cacheFilter() {
+		FilterRegistrationBean rs = new FilterRegistrationBean(new CacheFilter());
+		rs.addUrlPatterns("*.css");
+		rs.addUrlPatterns("*.js");
+		rs.addUrlPatterns("*.wpd");
+		rs.addUrlPatterns("*.wcs");
+		rs.addUrlPatterns("*.jpg");
+		rs.addUrlPatterns("*.jpeg");
+		rs.addUrlPatterns("*.png");
+		return rs;
 	}
-	*/
 }
 
 

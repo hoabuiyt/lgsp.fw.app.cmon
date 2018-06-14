@@ -1,12 +1,9 @@
+<?style href="/backend/login/css/login.min.css" type="text/css" ?>
 <?page title="Đăng nhập" contentType="text/html;charset=UTF-8"?>
 <?meta http-equiv="X-UA-Compatible" content="IE=edge"?>
 <?meta name="viewport" content="width=device-width, initial-scale=1"?>
-
-<?style href="/backend/admin-lte/bootstrap/css/bootstrap.css" type="text/css" ?>
-<?script type="text/javascript"  src="/backend/admin-lte/bootstrap/js/bootstrap.js"?>
-
+<?script type="text/javascript"  src="/backend/login/js/login.min.js"?>
 <?link rel="icon" href="/img/favicon.png" type="image/x-icon" ?>
-
 <zk xmlns:n="native" xmlns:x="xhtml" xmlns:zk="zk" xmlns:w="client" xmlns:ca="client/attribute">
 	<style>
 		body {background: #E9EEF3}
@@ -55,9 +52,9 @@
 			<n:div id="login" class="animate form">				
 				<n:h2>ĐĂNG NHẬP</n:h2>
 				<n:section class="login_content">
-					<n:form action="login" method="post">
+					<n:form action="" method="post">
 						<div class="login-field">
-							<textbox type="text" id="username" name="username" focus="true" 
+							<textbox type="text" id="username" name="username"  focus="true" 
 								class="form-control username" placeholder="Tên đăng nhập" >
 							</textbox>		
 							<n:span class="icon-username"></n:span>						
@@ -70,7 +67,7 @@
 							<timer id="timer" delay="10" repeats="true" w:onTimer="zk.Widget.$('$username').updateChange_();zk.Widget.$('$password').updateChange_();" />
 						</div>
 						<div>
-							<n:button type="submit" class="btn">Log in</n:button>
+							<button sclass="btn btn-default submit btn-login" label="Đăng nhập" type="submit"/>
 						</div>
 						<div class="clearfix"></div>
 					</n:form>
