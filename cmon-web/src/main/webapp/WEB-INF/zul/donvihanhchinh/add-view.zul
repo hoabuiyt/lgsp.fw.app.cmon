@@ -2,12 +2,11 @@
 	id="wdn" border="normal" mode="modal" contentStyle="overflow:auto;"
 	closable="true" title="Tạo mới đơn vị hành chính"
 	validationMessages="@id('vmsgs')" width="500px"
-	viewModel="@id('v') @init(execution.arg.model)"
-	form="@id('fx') @load(execution.arg.model) @save(execution.arg.model, before='save') @validator(self.attributes.v.formValidator)">
-	
+	viewModel="@id('v') @init(arg.viewModel)"
+	form="@id('fx') @load(self.attributes.v.args.model) @save(self.attributes.v.args.model, before='save') @validator(self.attributes.v.formValidator)">
 	<div class="row box-body">
 		<div class="col-md-12">
-			<div class="form-group">
+			<div class="form-group" zk:if="false">
 				<x:label>
 					Cấp
 					<n:small class="required">*</n:small>
@@ -27,8 +26,8 @@
 					<n:small class="required">*</n:small>
 				</x:label>
 				<textbox width="100%" maxlength="150"
-					class="form-control" value="@bind(fx.ten)" />
-				<label class="error" value="@load(vmsgs['ten'])" />
+					class="form-control" value="@bind(fx.name)" />
+				<label class="error" value="@load(vmsgs['name'])" />
 			</div>
 			<div class="form-group">
 				<x:label>
@@ -36,15 +35,15 @@
 					<n:small class="required">*</n:small>
 				</x:label>
 				<textbox width="100%" maxlength="150"
-					class="form-control" value="@bind(fx.ma)" />
-				<label class="error" value="@load(vmsgs['ma'])" />
+					class="form-control" value="@bind(fx.code)" />
+				<label class="error" value="@load(vmsgs['code'])" />
 			</div>
 		</div>
 	</div>
 	
 	<div class="row box-footer">
 		<x:button class="btn btn-success" style="margin-right: 10px;"
-			onClick="@command('save', wdn=wdn)">
+			onClick="@command('save', model=v.args.model, wdn=wdn)">
 			<n:i class="fa fa-save"></n:i>
 			&#160;&#160;Lưu
 		</x:button>

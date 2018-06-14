@@ -65,17 +65,19 @@
 											<treecol label="Thao tác" width="160px"></treecol>
 										</treecols>
 										<template name="model" var="node">
-											<treeitem onOpen="@command('loadChild')" viewModel="@id('vmchild') @init(node)">
+											<treeitem onOpen="node.loadChild()">
 												<treerow>
 													<treecell>
-														<label value="@load(vmchild.data.name)"></label>
+														<label value="@load(node.data.name)"></label>
 													</treecell>
 													
 													<treecell>
-														<x:button class="btn btn-success btn-xs" title="Thêm con">
+														<x:button class="btn btn-success btn-xs" title="Thêm con" 
+															onClick="@command('redirectPage', zul='donvihanhchinh/add.zul', vmArgs=vm, vm=vm.createEntityHasParent(node.data.parentId))">
 															<n:i class="fa fa-plus"></n:i> 
 														</x:button>
-														<x:button class="btn btn-info btn-xs" title="Sửa">
+														<x:button class="btn btn-info btn-xs" title="Sửa"
+															onClick="@command('redirectPage', zul='donvihanhchinh/view.zul', vmArgs=vm, vm=node.data)">
 															<n:i class="fa fa-edit"></n:i>
 														</x:button>
 														<x:a class="btn btn-info btn-xs">

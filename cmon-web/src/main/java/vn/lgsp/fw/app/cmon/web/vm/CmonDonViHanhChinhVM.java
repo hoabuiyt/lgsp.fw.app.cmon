@@ -5,15 +5,18 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 
-import org.wso2.client.api.Administrative.DefaultApi;
+import javax.servlet.ServletRequest;
+
+import org.springframework.web.bind.ServletRequestUtils;
 import org.wso2.client.api.ApiClient;
 import org.wso2.client.api.ApiException;
+import org.wso2.client.api.Administrative.DefaultApi;
 import org.wso2.client.model.Administrative.DVHCItem;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.lang.Integers;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.DefaultTreeModel;
@@ -22,23 +25,30 @@ import org.zkoss.zul.Window;
 import vn.lgsp.fw.app.cmon.domain.constant.ECapDonViHanhChinh;
 import vn.lgsp.fw.app.cmon.domain.entity.CmonDonViHanhChinh;
 
-public class CmonDonViHanhChinhVM {
-	private CmonDonViHanhChinh entity;
+public class CmonDonViHanhChinhVM extends BaseObject {
+	private DVHCItem entity;
 
 	/**
 	 * Get entity, auto new instance if entity be null
 	 */
-	public CmonDonViHanhChinh getEntity() {
+	public DVHCItem getEntity() {
 		if (entity == null) {
-			entity = new CmonDonViHanhChinh();
+			entity = new DVHCItem();
 		}
+		return entity;
+	}
+	
+	
+	public DVHCItem createEntityHasParent(Integer parentId) {
+		DVHCItem entity = new DVHCItem();
+		entity.setParentId(parentId);
 		return entity;
 	}
 
 	/**
 	 * Get entity, auto new instance if entity be null
 	 */
-	public CmonDonViHanhChinh setEntity(CmonDonViHanhChinh entity) {
+	public DVHCItem setEntity(DVHCItem entity) {
 		this.entity = entity;
 		return entity;
 	}
@@ -51,10 +61,10 @@ public class CmonDonViHanhChinhVM {
 			public void validate(org.zkoss.bind.ValidationContext ctx) {
 				LinkedHashMap<String[], Object> map = new LinkedHashMap<String[], Object>();
 				map.put(new String[] { "cap", "no empty" },
-						((CmonDonViHanhChinh) ctx.getProperty().getValue()).getCap());
-				map.put(new String[] { "ten", "no empty" },
-						((CmonDonViHanhChinh) ctx.getProperty().getValue()).getTen());
-				map.put(new String[] { "ma", "no empty" }, ((CmonDonViHanhChinh) ctx.getProperty().getValue()).getMa());
+						((DVHCItem) ctx.getProperty().getValue()).getLevel());
+				map.put(new String[] { "name", "no empty" },
+						((DVHCItem) ctx.getProperty().getValue()).getName());
+				map.put(new String[] { "code", "no empty" }, ((DVHCItem) ctx.getProperty().getValue()).getCode());
 				for (Entry<String[], Object> entry : map.entrySet()) {
 					try {
 						System.out.println(entry.getKey()[0] + " " + entry.getKey()[1] + " => " + entry.getValue());
@@ -72,8 +82,8 @@ public class CmonDonViHanhChinhVM {
 	 * Save entity
 	 */
 	@Command
-	public void save(@BindingParam("wdn") Window wdn) {
-		System.out.println("Entity is " + this.getEntity().getTen());
+	public void save(@BindingParam("model") CmonDonViHanhChinh model ,@BindingParam("wdn") Window wdn) {
+		System.out.println("Entity is " + model.getTen());
 		if (wdn != null) {
 			wdn.detach();
 		}
@@ -141,15 +151,16 @@ public class CmonDonViHanhChinhVM {
 		return dvhc;
 	}
 	
-	/**
-	 * Create a component of zkoss
-	 */
-	@Command
-	public void redirectPage(@BindingParam("zul") String zul, @BindingParam("vmArgs") Object vmArgs,
-			@BindingParam("vm") Object vm, @BindingParam("nhom") Object nhom) {
-		Map<String, Object> args = new HashMap<>();
-		args.put("vmArgs", vmArgs);
-		args.put("nhom", nhom);
-		Executions.createComponents(zul, null, args);
+	private HashMap<Object, Object> args;
+	public HashMap<Object, Object> getArgs() {
+		if (args == null) {
+			args = new HashMap<Object, Object>();
+			args.put("page", Integers.ZERO); 
+			args.put("pagesize", Integer.valueOf(ServletRequestUtils
+					.getIntParameter((ServletRequest) Executions.getCurrent()
+							.getNativeRequest(), "pagesize", 10)));
+			args.putAll(Executions.getCurrent().getArg());
+		}
+		return args;
 	}
 }
