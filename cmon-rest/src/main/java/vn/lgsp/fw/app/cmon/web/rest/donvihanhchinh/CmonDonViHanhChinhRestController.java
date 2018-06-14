@@ -2,6 +2,8 @@ package vn.lgsp.fw.app.cmon.web.rest.donvihanhchinh;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,7 +42,8 @@ public class CmonDonViHanhChinhRestController extends BaseRestController<CmonDon
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<PagedResources<CmonDonViHanhChinhResource>> loadAll(Pageable pageable){
+	public ResponseEntity<PagedResources<CmonDonViHanhChinhResource>> loadAll(Pageable pageable, HttpServletRequest request){
+		System.out.println("request:"+request.getRemoteHost());
 		Page<CmonDonViHanhChinh> list = service.findPage(pageable);
 		return ResponseEntity.ok(pageAssembler.toResource(list, assembler));
 	}
