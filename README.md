@@ -1,6 +1,6 @@
 # lgsp.fw.app.cmon
 
-Install [parent pom](https://github.com/Caltalys/lgsp-parent) before doing anything
+Install [parent pom](https://github.com/Caltalys/lgsp-parent), [core](https://github.com/Caltalys/lgsp.fw.core) before doing anything
 
 When develop REST API, you can run with 
 ```
