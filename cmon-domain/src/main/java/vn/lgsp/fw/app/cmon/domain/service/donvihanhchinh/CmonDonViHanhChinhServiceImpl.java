@@ -18,16 +18,14 @@ import com.querydsl.core.types.dsl.Expressions;
 
 import vn.lgsp.fw.app.cmon.domain.entity.CmonDonViHanhChinh;
 import vn.lgsp.fw.app.cmon.domain.entity.QCmonDonViHanhChinh;
-import vn.lgsp.fw.app.cmon.domain.exception.EntityNotFoundException;
-import vn.lgsp.fw.app.cmon.domain.exception.UpdateEntityMismatchException;
 import vn.lgsp.fw.app.cmon.domain.repository.BaseSearchCriteria;
 import vn.lgsp.fw.app.cmon.domain.repository.donvihanhchinh.CmonDonViHanhChinhRepository;
 
 @Service
 @Transactional
-public class CmonDonViHanhChinhServiceImpl implements CmonDonViHanhChinhService {
+public class CmonDonViHanhChinhServiceImpl/* implements CmonDonViHanhChinhService*/ {
 
-	private static final QCmonDonViHanhChinh CMON_DVHC = QCmonDonViHanhChinh.cmonDonViHanhChinh;
+	/*private static final QCmonDonViHanhChinh CMON_DVHC = QCmonDonViHanhChinh.cmonDonViHanhChinh;
 	
 	BooleanExpression base = CMON_DVHC.deleted.isFalse();
 
@@ -35,32 +33,15 @@ public class CmonDonViHanhChinhServiceImpl implements CmonDonViHanhChinhService 
 	CmonDonViHanhChinhRepository repository;
 	
 	@Override
-	public List<CmonDonViHanhChinh> findAll(){
-		List<CmonDonViHanhChinh> list = repository.findAllByPredicate(base, null, new OrderSpecifier<>(
-				Order.DESC, Expressions.dateTimePath(LocalDateTime.class, CMON_DVHC, "ngaySua")));
-		return list;
-	}
-	
-	@Override
-	public List<CmonDonViHanhChinh> findAll(Pageable pageable){
-		List<CmonDonViHanhChinh> list = repository.findAllByPredicate(base, pageable, new OrderSpecifier<>(
+	public Page<CmonDonViHanhChinh> findAll(Pageable pageable){
+		Page<CmonDonViHanhChinh> list = repository.findAll(base, pageable, new OrderSpecifier<>(
 				Order.DESC, Expressions.dateTimePath(LocalDateTime.class, CMON_DVHC, "ngaySua")));
 		return list;
 	}
 
 	@Override
-	public Page<CmonDonViHanhChinh> findPage(Pageable pageable) {
-		Page<CmonDonViHanhChinh> page = repository.findPageByPredicate(base, pageable, new OrderSpecifier<>(
-				Order.DESC, Expressions.dateTimePath(LocalDateTime.class, CMON_DVHC, "ngaySua")));
-		return page;
-	}
-	
-	@Override
-	public CmonDonViHanhChinh findOneById(Long id) throws EntityNotFoundException {
+	public CmonDonViHanhChinh findOneById(Long id) {
 		CmonDonViHanhChinh entity = repository.findOneById(id);
-		if (entity == null) {
-			throw new EntityNotFoundException(CmonDonViHanhChinh.class, "id", id.toString());
-		}
 		return entity;
 	}
 
@@ -70,27 +51,22 @@ public class CmonDonViHanhChinhServiceImpl implements CmonDonViHanhChinhService 
 	}
 
 	@Override
-	public CmonDonViHanhChinh update(Long id, CmonDonViHanhChinh entity)
-			throws EntityNotFoundException, UpdateEntityMismatchException {
+	public CmonDonViHanhChinh update(Long id, CmonDonViHanhChinh entity) {
 		if(id.equals(entity.getId())) {
 			boolean exist = repository.exists(id);
 			if (exist) {
 				return repository.save(entity);
-			} else {
-				throw new EntityNotFoundException(CmonDonViHanhChinh.class, "id", id.toString());
 			}
 		}
-		throw new UpdateEntityMismatchException(CmonDonViHanhChinh.class, id, entity.getId());
+		return null;
 	}
 
 	@Override
-	public void delete(Long id) throws EntityNotFoundException {
+	public void delete(Long id) {
 		boolean exist = repository.exists(id);
 		if (exist) {
 			repository.delete(id);
-		} else {
-			throw new EntityNotFoundException(CmonDonViHanhChinh.class, "id", id.toString());
-		}
+		} 
 	}
 	
 	public Page<CmonDonViHanhChinh> findPageBySearchCriteria(BaseSearchCriteria search, Pageable pageable) {
@@ -114,7 +90,7 @@ public class CmonDonViHanhChinhServiceImpl implements CmonDonViHanhChinhService 
 	@Override
 	public List<CmonDonViHanhChinh> findAllDonViHanhChinhChildren(Long id) {
 		return repository.findAllDonViHanhChinhChildren(id);
-	}
+	}*/
 
 	
 

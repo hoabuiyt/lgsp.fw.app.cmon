@@ -5,6 +5,7 @@ import javax.persistence.MappedSuperclass;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import vn.lgsp.fw.core.BaseEntity;
 
 @Data
 @ToString

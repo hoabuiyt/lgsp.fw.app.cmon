@@ -21,8 +21,8 @@ public class CmonDanTocResourceAssembler extends ResourceAssemblerSupport<CmonDa
 	@Override
 	public CmonDanTocResource toResource(CmonDanToc entity) {
 		CmonDanTocResource resource = new CmonDanTocResource(entity);
-		final Link selfLink = entityLinks.linkToSingleResource(entity);
-        resource.add(selfLink.withSelfRel());
+		//final Link selfLink = entityLinks.linkToSingleResource(entity);
+        //resource.add(selfLink.withSelfRel());
 		return resource;
 	}
 

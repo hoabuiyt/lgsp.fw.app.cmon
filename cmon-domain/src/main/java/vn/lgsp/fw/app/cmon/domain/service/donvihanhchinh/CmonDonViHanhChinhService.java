@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.repository.query.Param;
 
 import vn.lgsp.fw.app.cmon.domain.entity.CmonDonViHanhChinh;
-import vn.lgsp.fw.app.cmon.domain.service.BaseService;
+import vn.lgsp.fw.core.BaseService;
 
 public interface CmonDonViHanhChinhService extends BaseService<CmonDonViHanhChinh>{
 	

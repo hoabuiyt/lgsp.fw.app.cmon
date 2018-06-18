@@ -1,12 +1,11 @@
 package vn.lgsp.fw.app.cmon.domain.repository.dantoc;
 
 
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import vn.lgsp.fw.app.cmon.domain.entity.CmonDanToc;
-import vn.lgsp.fw.app.cmon.domain.repository.BaseRepository;
+import vn.lgsp.fw.core.BaseRepository;
 
-@RepositoryRestResource
-public interface CmonDanTocRepository extends BaseRepository<CmonDanToc, Long>, CustomCmonDanTocRepository<CmonDanToc>{
+public interface CmonDanTocRepository extends BaseRepository<CmonDanToc, Long> , CustomCmonDanTocRepository<CmonDanToc>{
 
 }

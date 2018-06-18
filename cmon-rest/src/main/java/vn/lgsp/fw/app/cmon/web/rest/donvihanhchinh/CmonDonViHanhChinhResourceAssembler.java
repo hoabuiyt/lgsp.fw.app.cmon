@@ -29,8 +29,8 @@ public class CmonDonViHanhChinhResourceAssembler extends ResourceAssemblerSuppor
 	@Override
 	public CmonDonViHanhChinhResource toResource(CmonDonViHanhChinh entity) {
 		CmonDonViHanhChinhResource resource = new CmonDonViHanhChinhResource(entity);
-		final Link selfLink = entityLinks.linkToSingleResource(entity);
-        resource.add(selfLink.withSelfRel());
+		//final Link selfLink = entityLinks.linkToSingleResource(entity);
+        //resource.add(selfLink.withSelfRel());
         try {
         	if(entity.getCha()!=null) {
         		resource.add(linkTo(methodOn(CmonDonViHanhChinhRestController.class).getOne(entity.getCha().getId())).withRel("cha"));

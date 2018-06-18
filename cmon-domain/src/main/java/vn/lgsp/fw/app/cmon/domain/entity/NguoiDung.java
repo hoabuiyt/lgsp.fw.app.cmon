@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import vn.lgsp.fw.app.cmon.domain.BaseEntity;
+import vn.lgsp.fw.core.BaseEntity;
 
 /**
  * Danh muc Don Vi Hanh Chinh

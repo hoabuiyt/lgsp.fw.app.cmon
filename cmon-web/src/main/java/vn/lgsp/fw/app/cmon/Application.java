@@ -8,25 +8,23 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import vn.lgsp.fw.app.cmon.config.SpringSecurityConfig;
-import vn.lgsp.fw.app.cmon.config.WebMvcConfig;
 import vn.lgsp.fw.app.cmon.domain.AuditorAwareImpl;
-import vn.lgsp.fw.app.cmon.domain.repository.BaseRepositoryImpl;
 import vn.lgsp.fw.app.cmon.web.CacheFilter;
+import vn.lgsp.fw.core.BaseRepositoryImpl;
+import vn.lgsp.fw.core.BaseServiceImpl;
 
 @EnableJpaRepositories(repositoryBaseClass = BaseRepositoryImpl.class)
 @EnableAutoConfiguration(exclude = SecurityAutoConfiguration.class)
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @EnableWebSecurity
-//@EnableWebMvc
+//@ComponentScan(basePackages={"vn.lgsp.fw.core", "vn.lgsp.fw.app.cmon.domain", "vn.lgsp.fw.app.cmon.web"})
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer{
 

@@ -5,7 +5,7 @@ import org.springframework.data.rest.webmvc.RepositorySearchesResource;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.ResourceProcessor;
 
-import vn.lgsp.fw.app.cmon.domain.repository.BaseRepository;
+import vn.lgsp.fw.core.BaseRepository;
 
 public class BaseRestController<T> implements ResourceProcessor<RepositorySearchesResource>{
 

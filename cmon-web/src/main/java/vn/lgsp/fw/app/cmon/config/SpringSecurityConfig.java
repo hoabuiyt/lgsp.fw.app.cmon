@@ -38,6 +38,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 	    web.ignoring().antMatchers("/backend/**");
+	    web.ignoring().antMatchers("/api/**");
 	}
 	
     @Override
@@ -45,7 +46,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
         http
         	.csrf().disable()
           .authorizeRequests()//.anyRequest().permitAll();
-          .antMatchers("/login*","/zkau/**","/rest/**").permitAll()
+          .antMatchers("/login*","/zkau/**").permitAll()
           .anyRequest().authenticated()
           .and()
           .formLogin()

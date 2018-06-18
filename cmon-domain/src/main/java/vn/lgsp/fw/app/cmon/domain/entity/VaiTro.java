@@ -18,7 +18,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import vn.lgsp.fw.app.cmon.domain.BaseEntity;
+import vn.lgsp.fw.core.BaseEntity;
 
 /**
  * Danh muc Don Vi Hanh Chinh

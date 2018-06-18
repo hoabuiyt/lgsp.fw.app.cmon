@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-    <artifactId>cmon</artifactId>
-    <groupId>vn.lgsp.fw.app</groupId>
-    <version>1.0.0</version>
-  </parent>
+		<artifactId>cmon</artifactId>
+		<groupId>vn.lgsp.fw.app</groupId>
+		<version>1.0.0</version>
+	</parent>
 	<artifactId>cmon-web</artifactId>
 	<properties>
 		<zk.version>8.5.0</zk.version>
@@ -37,7 +38,7 @@
 			<url>http://mavensync.zkoss.org/maven2/</url>
 		</pluginRepository>
 	</pluginRepositories>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>vn.lgsp.fw.app</groupId>
@@ -98,29 +99,29 @@
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zhtml</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>${commons-io}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
 		<dependency>
-		    <groupId>joda-time</groupId>
-		    <artifactId>joda-time</artifactId>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.wso2</groupId>
 			<artifactId>org.wso2.client.Administrative</artifactId>
 			<version>1.0.0</version>
-    		<!-- <systemPath>${basedir}/src/main/webapp/lib/org.wso2.client.Administrative-1.0.0.jar</systemPath> -->
+			<!-- <systemPath>${basedir}/src/main/webapp/lib/org.wso2.client.Administrative-1.0.0.jar</systemPath> -->
 		</dependency>
-		
+
 	</dependencies>
 	<build>
 		<plugins>
@@ -159,27 +160,13 @@
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<groupId>org.apache.maven.plugins</groupId>
-				</plugin>
+			</plugin>
 			<!-- Pack zips -->
-			<!-- <plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>webapp</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-						<configuration>
-							<finalName>cmon-web</finalName>
-							<appendAssemblyId>false</appendAssemblyId>
-							<descriptors>
-								<descriptor>src/main/assembly/webapp.xml</descriptor>
-							</descriptors>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin> -->
+			<!-- <plugin> <artifactId>maven-assembly-plugin</artifactId> <executions> 
+				<execution> <id>webapp</id> <phase>package</phase> <goals> <goal>single</goal> 
+				</goals> <configuration> <finalName>cmon-web</finalName> <appendAssemblyId>false</appendAssemblyId> 
+				<descriptors> <descriptor>src/main/assembly/webapp.xml</descriptor> </descriptors> 
+				</configuration> </execution> </executions> </plugin> -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

@@ -17,16 +17,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import vn.lgsp.fw.app.cmon.domain.entity.CmonDonViHanhChinh;
 import vn.lgsp.fw.app.cmon.domain.exception.EntityNotFoundException;
 import vn.lgsp.fw.app.cmon.domain.exception.UpdateEntityMismatchException;
-import vn.lgsp.fw.app.cmon.domain.repository.BaseRepository;
 import vn.lgsp.fw.app.cmon.domain.service.donvihanhchinh.CmonDonViHanhChinhService;
 import vn.lgsp.fw.app.cmon.web.rest.BaseRestController;
+import vn.lgsp.fw.core.BaseRepository;
 
-@RepositoryRestController
-@ExposesResourceFor(CmonDonViHanhChinh.class)
+@RestController
 @RequestMapping(path = "/rest/cmonDonViHanhChinhs", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CmonDonViHanhChinhRestController extends BaseRestController<CmonDonViHanhChinh> {
 
