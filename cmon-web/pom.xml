@@ -45,10 +45,10 @@
 			<artifactId>cmon-domain</artifactId>
 		</dependency>
 		<!-- Uncomment if using REST API -->
-		<!-- <dependency>
+		<dependency>
 			<groupId>vn.lgsp.fw.app</groupId>
 			<artifactId>cmon-rest</artifactId>
-		</dependency> -->
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>

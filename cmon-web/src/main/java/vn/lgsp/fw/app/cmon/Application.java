@@ -9,6 +9,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
@@ -18,14 +19,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import vn.lgsp.fw.app.cmon.domain.AuditorAwareImpl;
 import vn.lgsp.fw.app.cmon.web.CacheFilter;
 import vn.lgsp.fw.core.BaseRepositoryImpl;
-import vn.lgsp.fw.core.BaseServiceImpl;
 
-@EnableJpaRepositories(repositoryBaseClass = BaseRepositoryImpl.class)
+//@EnableJpaRepositories(repositoryBaseClass = BaseRepositoryImpl.class)
 @EnableAutoConfiguration(exclude = SecurityAutoConfiguration.class)
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @EnableWebSecurity
-//@ComponentScan(basePackages={"vn.lgsp.fw.core", "vn.lgsp.fw.app.cmon.domain", "vn.lgsp.fw.app.cmon.web"})
 @SpringBootApplication
+@Import(CmonDomainApp.class)
+//@ComponentScan({"vn.lgsp.fw"})
 public class Application extends SpringBootServletInitializer{
 
 	public static void main(String[] args) {
@@ -47,6 +48,9 @@ public class Application extends SpringBootServletInitializer{
         return new PropertySourcesPlaceholderConfigurer();
     }
 
+	//@Autowired
+	//CmonDanTocRestController cmonDanTocRestController;
+	
 	//@Bean
 	public FilterRegistrationBean cacheFilter() {
 		FilterRegistrationBean rs = new FilterRegistrationBean(new CacheFilter());

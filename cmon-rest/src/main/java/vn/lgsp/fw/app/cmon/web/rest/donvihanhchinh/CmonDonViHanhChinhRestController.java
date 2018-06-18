@@ -44,7 +44,7 @@ public class CmonDonViHanhChinhRestController extends BaseRestController<CmonDon
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<PagedResources<CmonDonViHanhChinhResource>> loadAll(Pageable pageable, HttpServletRequest request){
 		System.out.println("request:"+request.getRemoteHost());
-		Page<CmonDonViHanhChinh> list = service.findPage(pageable);
+		Page<CmonDonViHanhChinh> list = service.findPage(null, pageable);
 		return ResponseEntity.ok(pageAssembler.toResource(list, assembler));
 	}
 

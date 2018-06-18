@@ -39,7 +39,7 @@ public class CmonDanTocRestController extends BaseRestController<CmonDanToc> {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<PagedResources<CmonDanTocResource>> loadAll(Pageable pageable) {
-		Page<CmonDanToc> list = service.findPage(pageable);
+		Page<CmonDanToc> list = service.findPage(null, pageable);
 		return ResponseEntity.ok(pageAssembler.toResource(list, assembler));
 	}
 

@@ -1,21 +1,17 @@
 package vn.lgsp.fw.app.cmon.domain.service.dantoc;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.Expressions;
 
 import vn.lgsp.fw.app.cmon.domain.entity.CmonDanToc;
 import vn.lgsp.fw.app.cmon.domain.entity.QCmonDanToc;
@@ -24,9 +20,9 @@ import vn.lgsp.fw.app.cmon.domain.repository.dantoc.CmonDanTocSearchCriteria;
 
 @Service
 @Transactional
-public class CmonDanTocServiceImpl/* implements CmonDanTocService */{
+public class CmonDanTocServiceImpl implements CmonDanTocService {
 
-	/*private static final QCmonDanToc CMON_DANTOC = QCmonDanToc.cmonDanToc;
+	private static final QCmonDanToc CMON_DANTOC = QCmonDanToc.cmonDanToc;
 
 	BooleanExpression base = CMON_DANTOC.deleted.isFalse();
 
@@ -34,29 +30,37 @@ public class CmonDanTocServiceImpl/* implements CmonDanTocService */{
 	CmonDanTocRepository repository;
 
 	@Override
-	public Page<CmonDanToc> findAll(Pageable pageable) {
-		Page<CmonDanToc> page = repository.findPage(base, pageable, new OrderSpecifier<>(
-				Order.DESC, Expressions.dateTimePath(LocalDateTime.class, CMON_DANTOC, "ngaySua")));
-		return page;
+	public Page<CmonDanToc> findPage(Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders) {
+		return findPage(predicate, pageable, orders);
+	}
+
+	
+	@Override
+	public List<CmonDanToc> findAll(Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders) {
+		return findAll(predicate, pageable, orders);
 	}
 	
 	@Override
 	public CmonDanToc findOneById(Long id) {
-		CmonDanToc entity = repository.findOneById(id);
-		return entity;
+		return findOneById(id);
 	}
 
 	@Override
+	public boolean existsById(Long id) {
+		return repository.existsById(id);
+	}
+	
+	@Override
 	public CmonDanToc save(CmonDanToc danToc) {
-		return repository.save(danToc);
+		return save(danToc);
 	}
 
 	@Override
 	public CmonDanToc update(Long id, CmonDanToc danToc) {
 		if(id.equals(danToc.getId())) {
-			boolean exist = repository.exists(id);
+			boolean exist = existsById(id);
 			if (exist) {
-				return repository.save(danToc);
+				return save(danToc);
 			}
 		}
 		return null;
@@ -64,9 +68,9 @@ public class CmonDanTocServiceImpl/* implements CmonDanTocService */{
 
 	@Override
 	public void delete(Long id) {
-		boolean exist = repository.exists(id);
+		boolean exist = existsById(id);
 		if (exist) {
-			repository.delete(id);
+			delete(id);
 		}
 	}
 
@@ -86,6 +90,8 @@ public class CmonDanTocServiceImpl/* implements CmonDanTocService */{
 
 		}
 		return predicate;
-	}*/
+	}
 
+
+	
 }
