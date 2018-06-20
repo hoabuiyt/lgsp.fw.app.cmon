@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>vn.lgsp.fw.app</groupId>
-	<artifactId>cmon</artifactId>
+	<groupId>vn.lgsp.fw</groupId>
+	<artifactId>cmon-app</artifactId>
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
 
@@ -31,13 +31,13 @@
 				<version>1.0.0</version>
 			</dependency>
 			<dependency>
-				<groupId>vn.lgsp.fw.app</groupId>
+				<groupId>vn.lgsp.fw</groupId>
 				<artifactId>cmon-domain</artifactId>
 				<version>1.0.0</version>
 			</dependency>
 			<dependency>
-				<groupId>vn.lgsp.fw.app</groupId>
-				<artifactId>cmon-rest</artifactId>
+				<groupId>vn.lgsp.fw</groupId>
+				<artifactId>cmon-api</artifactId>
 				<version>1.0.0</version>
 			</dependency>
 			<dependency>
@@ -70,7 +70,8 @@
 	</build>
 	<modules>
 		<module>cmon-domain</module>
+		
 		<module>cmon-web</module>
-		<module>cmon-rest</module>
+		<module>cmon-api</module>
 	</modules>
 </project>
