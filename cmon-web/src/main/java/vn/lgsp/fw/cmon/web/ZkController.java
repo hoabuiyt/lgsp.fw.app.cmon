@@ -26,8 +26,6 @@ public class ZkController {
 	}
 	
 	
-	
-	
 	private transient Map<Object, Object> arg = Collections.emptyMap();
 	@Transient
 	public Map<Object, Object> getArg() {

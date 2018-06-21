@@ -2,6 +2,7 @@ package vn.lgsp.fw.cmon;
 
 import java.util.Arrays;
 
+import org.pac4j.core.authorization.authorizer.RequireAnyRoleAuthorizer;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
 import org.pac4j.saml.client.SAML2Client;
@@ -23,6 +24,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
+import vn.lgsp.fw.cmon.config.CustomAuthorizer;
 import vn.lgsp.fw.cmon.domain.AuditorAwareImpl;
 import vn.lgsp.fw.cmon.web.CacheFilter;
 import vn.lgsp.fw.core.BaseRepositoryImpl;
@@ -33,9 +35,9 @@ import vn.lgsp.fw.core.BaseRepositoryImpl;
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer{
 	
-	private String keystorePath = "resource:wso2carbon.jks";
-	private String keystorePassword = "wso2carbon";
-	private String privateKeyPassword = "wso2carbon";
+	private String keystorePath = "resource:cmon-app.jks";
+	private String keystorePassword = "cmon-app";
+	private String privateKeyPassword = "cmon-app";
 	private String identityProviderMetadataPath = "resource:is-metadata.xml";
 	
 	public static void main(String[] args) {
@@ -79,13 +81,16 @@ public class Application extends SpringBootServletInitializer{
 		samlCfg.setKeystorePath(keystorePath);
 		samlCfg.setKeystorePassword(keystorePassword);
 		samlCfg.setPrivateKeyPassword(privateKeyPassword);	
-		samlCfg.setIdentityProviderMetadataPath(identityProviderMetadataPath);	
+		samlCfg.setIdentityProviderMetadataPath(identityProviderMetadataPath);
+		samlCfg.setKeystoreAlias("cmon-app");
 		samlCfg.setMaximumAuthenticationLifetime(3600);
 		samlCfg.setServiceProviderEntityId("cmon_app");
 		samlCfg.setServiceProviderMetadataPath("sp-metadata.xml");
 	    final SAML2Client saml2Client = new SAML2Client(samlCfg);
 	    final Clients clients = new Clients("http://localhost:8082/cmon-web/callback", saml2Client);
 	    final Config samlConfig = new Config(clients);
+	    samlConfig.addAuthorizer("admin", new RequireAnyRoleAuthorizer("ROLE_ADMIN"));
+	    samlConfig.addAuthorizer("custom", new CustomAuthorizer());
 		return samlConfig;
 	}
 	

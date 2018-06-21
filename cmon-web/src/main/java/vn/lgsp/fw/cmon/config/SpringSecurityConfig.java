@@ -75,11 +75,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
          http
                  .antMatcher("/**")
                  .authorizeRequests()
-                     .antMatchers("/","/logout").permitAll()
-                     .antMatchers("/**").authenticated()
+                     .antMatchers("/calback").permitAll()
+                     .anyRequest().authenticated()
                  .and()
                  .addFilterBefore(filterLogin, BasicAuthenticationFilter.class)
-                 .addFilterBefore(filterLogout, BasicAuthenticationFilter.class)
+                 //.addFilterBefore(filterLogout, BasicAuthenticationFilter.class)
                  .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
     }
     
