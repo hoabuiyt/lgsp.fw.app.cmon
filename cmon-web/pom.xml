@@ -77,13 +77,13 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-            <groupId>org.pac4j</groupId>
-            <artifactId>spring-security-pac4j</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.pac4j</groupId>
-            <artifactId>pac4j-saml</artifactId>
-        </dependency>
+			<groupId>org.pac4j</groupId>
+			<artifactId>spring-security-pac4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.pac4j</groupId>
+			<artifactId>pac4j-saml</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zkbind</artifactId>
