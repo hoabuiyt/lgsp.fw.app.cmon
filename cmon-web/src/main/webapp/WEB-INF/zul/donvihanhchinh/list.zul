@@ -68,12 +68,12 @@
 											<treeitem onOpen="node.loadChild()">
 												<treerow>
 													<treecell>
-														<label value="@load(node.data.name)"></label>
+														<label value="@load(node.data.ten)"></label>
 													</treecell>
 													
 													<treecell>
 														<x:button class="btn btn-success btn-xs" title="Thêm con" 
-															onClick="@command('redirectPage', zul='donvihanhchinh/add.zul', vmArgs=vm, vm=vm.createEntityHasParent(node.data.parentId))">
+															onClick="@command('redirectPage', zul='donvihanhchinh/add.zul', vmArgs=vm, vm=vm.createEntityHasParent(node.data.chaId))">
 															<n:i class="fa fa-plus"></n:i> 
 														</x:button>
 														<x:button class="btn btn-info btn-xs" title="Sửa"

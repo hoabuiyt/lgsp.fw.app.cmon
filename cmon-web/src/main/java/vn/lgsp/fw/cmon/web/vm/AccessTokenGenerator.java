@@ -8,16 +8,16 @@ import java.util.Base64;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-public class AccessTokenJson {
+public class AccessTokenGenerator {
 	private String consumerKey;
 	private String secretKey;
 	private String tokenUrl;
 	private JsonObject response;
 
-	public AccessTokenJson() {
+	public AccessTokenGenerator() {
 	}
 
-	public AccessTokenJson(String consumerKey, String scretKey, String url) {
+	public AccessTokenGenerator(String consumerKey, String scretKey, String url) {
 		this.consumerKey = consumerKey;
 		this.secretKey = scretKey;
 		this.tokenUrl = url;
@@ -51,7 +51,7 @@ public class AccessTokenJson {
 		return response != null ? response.toString() : "";
 	}
 
-	public JsonObject generateToken() {
+	public JsonObject generateTokenJson() {
 		if (getConsumerKey() != null && getSecretKey() != null) {
 			if (getTokenUrl() != null && !getTokenUrl().isEmpty()) {
 				String grantType = "client_credentials";
@@ -83,5 +83,15 @@ public class AccessTokenJson {
 			System.out.println("Consumer key and scret key must not be null");
 		}
 		return response;
+	}
+	
+	public String generateTokenString() {
+		JsonObject json = generateTokenJson();
+		String token = "";
+		if(json != null) {
+			token = json.get("access_token").getAsString();
+		}
+		return token;
+		
 	}
 }

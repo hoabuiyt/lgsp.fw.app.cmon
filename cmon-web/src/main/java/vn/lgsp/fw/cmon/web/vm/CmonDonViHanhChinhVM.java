@@ -1,5 +1,6 @@
 package vn.lgsp.fw.cmon.web.vm;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,10 +11,9 @@ import java.util.Map.Entry;
 import javax.servlet.ServletRequest;
 
 import org.springframework.web.bind.ServletRequestUtils;
-import org.wso2.client.api.ApiClient;
 import org.wso2.client.api.ApiException;
-import org.wso2.client.api.Administrative.DefaultApi;
-import org.wso2.client.model.Administrative.DVHCItem;
+import org.wso2.client.api.Administratives.DefaultApi;
+import org.wso2.client.model.Administratives.DonViHanhChinh;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.lang.Integers;
@@ -26,29 +26,30 @@ import vn.lgsp.fw.cmon.domain.constant.ECapDonViHanhChinh;
 import vn.lgsp.fw.cmon.domain.entity.CmonDonViHanhChinh;
 
 public class CmonDonViHanhChinhVM extends BaseObject {
-	private DVHCItem entity;
+	private DonViHanhChinh entity;
+	DefaultApi service = LgspService.getService();
 
 	/**
 	 * Get entity, auto new instance if entity be null
 	 */
-	public DVHCItem getEntity() {
+	public DonViHanhChinh getEntity() {
 		if (entity == null) {
-			entity = new DVHCItem();
+			entity = new DonViHanhChinh();
 		}
 		return entity;
 	}
 	
 	
-	public DVHCItem createEntityHasParent(Integer parentId) {
-		DVHCItem entity = new DVHCItem();
-		entity.setParentId(parentId);
+	public DonViHanhChinh createEntityHasParent(Long parentId) {
+		DonViHanhChinh entity = new DonViHanhChinh();
+		entity.setChaId(BigDecimal.valueOf(parentId));
 		return entity;
 	}
 
 	/**
 	 * Get entity, auto new instance if entity be null
 	 */
-	public DVHCItem setEntity(DVHCItem entity) {
+	public DonViHanhChinh setEntity(DonViHanhChinh entity) {
 		this.entity = entity;
 		return entity;
 	}
@@ -61,10 +62,10 @@ public class CmonDonViHanhChinhVM extends BaseObject {
 			public void validate(org.zkoss.bind.ValidationContext ctx) {
 				LinkedHashMap<String[], Object> map = new LinkedHashMap<String[], Object>();
 				map.put(new String[] { "cap", "no empty" },
-						((DVHCItem) ctx.getProperty().getValue()).getLevel());
+						((DonViHanhChinh) ctx.getProperty().getValue()).getCap());
 				map.put(new String[] { "name", "no empty" },
-						((DVHCItem) ctx.getProperty().getValue()).getName());
-				map.put(new String[] { "code", "no empty" }, ((DVHCItem) ctx.getProperty().getValue()).getCode());
+						((DonViHanhChinh) ctx.getProperty().getValue()).getTen());
+				map.put(new String[] { "code", "no empty" }, ((DonViHanhChinh) ctx.getProperty().getValue()).getMa());
 				for (Entry<String[], Object> entry : map.entrySet()) {
 					try {
 						System.out.println(entry.getKey()[0] + " " + entry.getKey()[1] + " => " + entry.getValue());
@@ -83,7 +84,6 @@ public class CmonDonViHanhChinhVM extends BaseObject {
 	 */
 	@Command
 	public void save(@BindingParam("model") CmonDonViHanhChinh model ,@BindingParam("wdn") Window wdn) {
-		System.out.println("Entity is " + model.getTen());
 		if (wdn != null) {
 			wdn.detach();
 		}
@@ -100,54 +100,36 @@ public class CmonDonViHanhChinhVM extends BaseObject {
 		return caps;
 	}
 
-	public List<CmonDonViHanhChinh> getDsDonViHanhChinhs() {
-		DefaultApi defaultApi = new DefaultApi();
-		ApiClient apiClient = defaultApi.getApiClient();
-		String accessToken = "d101a6db-19f9-3f52-bf04-db61d3449026";
-		apiClient.addDefaultHeader("Authorization", "Bearer " + accessToken);
-		apiClient.setBasePath("http://192.168.1.104:8284/administratives/v1.0.0");
-		defaultApi.setApiClient(apiClient);
+	public List<DonViHanhChinh> getDsDonViHanhChinhs() {        
+		List<DonViHanhChinh> result = new ArrayList<DonViHanhChinh>();
 		try {
-			List<DVHCItem> result = defaultApi.getDVHCCap1Get();
-			System.out.println(result);
+			result.addAll(service.getCap1Get());
 		} catch (ApiException e) {
 			e.printStackTrace();
 		}
-		
-		// Sample data
-		List<CmonDonViHanhChinh> list = new ArrayList<CmonDonViHanhChinh>();
-		list.add(new CmonDonViHanhChinh("Thành phố Tam Kỳ", ECapDonViHanhChinh.THANH_PHO));
-		list.add(new CmonDonViHanhChinh("Huyện Núi Thành", ECapDonViHanhChinh.HUYEN));
-		list.add(new CmonDonViHanhChinh("Huyện Thăng Bình", ECapDonViHanhChinh.HUYEN));
-		return list;
+		return result;
 	}
 	
-	public DefaultTreeModel<DVHCItem> getModel() {
-		DonViHanhChinhNode rootNode = new DonViHanhChinhNode(newDVHC(1, "root", "root", 0, null, 1), new ArrayList<DonViHanhChinhNode>());
+	public DefaultTreeModel<DonViHanhChinh> getModel() {
+		DonViHanhChinh dvRoot = newDVHC(1l, "root", "root", "CAP_TINH", 1l);
+		dvRoot.setChildCount(BigDecimal.valueOf(1));
+		DonViHanhChinhNode rootNode = new DonViHanhChinhNode(dvRoot, new ArrayList<DonViHanhChinhNode>());
 		DonViHanhChinhModel model = new DonViHanhChinhModel(rootNode);
-		for(DVHCItem dv : getList()) {
+		for(DonViHanhChinh dv : getDsDonViHanhChinhs()) {
 			DonViHanhChinhNode node = new DonViHanhChinhNode(dv, new ArrayList<DonViHanhChinhNode>());
 			rootNode.add(node);
 		}
 		return model;
 	}
 	
-	public List<DVHCItem> getList() {
-		List<DVHCItem> tree = new ArrayList<DVHCItem>();
-		tree.add(newDVHC(1, "Thành phố Tam Kỳ", "THANH_PHO", 1, null, 1));
-		tree.add(newDVHC(1, "Huyện Núi Thành", "THANH_PHO", 1, null, 1));
-		tree.add(newDVHC(1, "Huyện Thăng Bình", "THANH_PHO", 1, null, 1));
-		return tree;
-	}
-	
-	public DVHCItem newDVHC(Integer id, String name, String code, Integer level, Integer parentId, Integer population) {
-		DVHCItem dvhc = new DVHCItem();
-		dvhc.setId(id);
-		dvhc.setName(name);
-		dvhc.setCode(code);
-		dvhc.setLevel(level);
-		dvhc.setParentId(parentId);
-		dvhc.setPopulation(population);
+	public DonViHanhChinh newDVHC(Long id, String name, String code, String level, Long parentId) {
+		DonViHanhChinh dvhc = new DonViHanhChinh();
+		dvhc.setId(BigDecimal.valueOf(id));
+		dvhc.setTen(name);
+		dvhc.setMa(code);
+		dvhc.setCap(level);
+		dvhc.setChaId(BigDecimal.valueOf(parentId));
+		dvhc.setChildCount(BigDecimal.valueOf(0));
 		return dvhc;
 	}
 	

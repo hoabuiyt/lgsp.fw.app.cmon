@@ -1,42 +1,46 @@
 package vn.lgsp.fw.cmon.web.vm;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.wso2.client.model.Administrative.DVHCItem;
+import org.wso2.client.api.ApiException;
+import org.wso2.client.api.Administratives.DefaultApi;
+import org.wso2.client.model.Administratives.DonViHanhChinh;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.zul.DefaultTreeNode;
 import org.zkoss.zul.TreeNode;
 
-public class DonViHanhChinhNode extends DefaultTreeNode<DVHCItem> implements TreeNode<DVHCItem>{
+public class DonViHanhChinhNode extends DefaultTreeNode<DonViHanhChinh> implements TreeNode<DonViHanhChinh>{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	DefaultApi service = LgspService.getService();
 	
-	public DonViHanhChinhNode(DVHCItem data) {
+	public DonViHanhChinhNode(DonViHanhChinh data) {
 		super(data);
 	}
 	
-	public DonViHanhChinhNode(DVHCItem data, Collection<DonViHanhChinhNode> children) {
+	public DonViHanhChinhNode(DonViHanhChinh data, Collection<DonViHanhChinhNode> children) {
 		super(data, children);
 	}
 	
-	public DonViHanhChinhNode(DVHCItem data, boolean nullAsMax) {
+	public DonViHanhChinhNode(DonViHanhChinh data, boolean nullAsMax) {
 		super(data, nullAsMax);
 	}
 
 
-	public DonViHanhChinhNode(DVHCItem data, Collection<DonViHanhChinhNode> children, boolean nullAsMax) {
+	public DonViHanhChinhNode(DonViHanhChinh data, Collection<DonViHanhChinhNode> children, boolean nullAsMax) {
 		super(data, children, nullAsMax);
 	}
 	
 	@Command
 	public void loadChild() {
 		if(this.getChildCount() == 0) {
-			for(DVHCItem dv : getChildList()) {
+			for(DonViHanhChinh dv : getChildList()) {
 				DonViHanhChinhNode node = new DonViHanhChinhNode(dv, new ArrayList<DonViHanhChinhNode>());
 				this.add(node);
 			}
@@ -45,29 +49,32 @@ public class DonViHanhChinhNode extends DefaultTreeNode<DVHCItem> implements Tre
 	
 	@Override
 	public boolean isLeaf() {
-		if(this.getData().getPopulation() > 0) {
+		if(this.getData() != null && this.getData().getChildCount() != null && this.getData().getChildCount().intValue() > 0) {
 			return false;
 		} else {
 			return true;
 		}
 	}
 	
-	public List<DVHCItem> getChildList() {
-		List<DVHCItem> tree = new ArrayList<DVHCItem>();
-		tree.add(newDVHC(4, "Xã Tam Thanh", "HUYEN", 2, 1, 1));
-		tree.add(newDVHC(5, "Xã Điện Ngọc", "HUYEN", 2, 1, 1));
-		tree.add(newDVHC(6, "Xã Tiên Cảnh", "HUYEN", 2, 1, 0));
-		return tree;
+	public List<DonViHanhChinh> getChildList() {
+		List<DonViHanhChinh> list = new ArrayList<DonViHanhChinh>();
+        try {
+            list.addAll(service.getChildsChaIdGet(this.getData().getId()));
+        } catch (ApiException e) {
+            e.printStackTrace();
+        }
+		return list;
 	}
 	
-	public DVHCItem newDVHC(Integer id, String name, String code, Integer level, Integer parentId, Integer population) {
-		DVHCItem dvhc = new DVHCItem();
-		dvhc.setId(id);
-		dvhc.setName(name);
-		dvhc.setCode(code);
-		dvhc.setLevel(level);
-		dvhc.setParentId(parentId);
-		dvhc.setPopulation(population);
+	public DonViHanhChinh newDVHC(Long id, String name, String code, String level, Long parentId) {
+		DonViHanhChinh dvhc = new DonViHanhChinh();
+		dvhc.setId(BigDecimal.valueOf(id));
+		dvhc.setTen(name);
+		dvhc.setMa(code);
+		dvhc.setCap(level);
+		dvhc.setChaId(BigDecimal.valueOf(parentId));
+		dvhc.setChildCount(BigDecimal.valueOf(0));
 		return dvhc;
 	}
+	
 }

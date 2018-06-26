@@ -22,7 +22,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import vn.lgsp.fw.cmon.web.AppAuthenticationSuccessHandler;
 
-@EnableWebSecurity
+//@EnableWebSecurity
 public class SpringSecurityConfig {
 	
 	//@Configuration
@@ -54,7 +54,7 @@ public class SpringSecurityConfig {
         }*/
     }
 	
-	@Configuration
+	//@Configuration
     @Order(1)
     public static class DefaultWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
@@ -82,13 +82,13 @@ public class SpringSecurityConfig {
             http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
             	.and()
             		.csrf().disable()
-        			.antMatcher("/**")
+        			//.antMatcher("/**")
         			.authorizeRequests()
-        			.anyRequest().authenticated()
-		        .and()
+        			.anyRequest().permitAll();
+		       /* .and()
 		        	.exceptionHandling().authenticationEntryPoint(new Pac4jEntryPoint(config, "SAML2Client"))
 		        .and()
-			        .logout().logoutSuccessUrl("/");  
+			        .logout().logoutSuccessUrl("/"); */ 
         }
     }
 	
