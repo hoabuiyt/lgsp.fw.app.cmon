@@ -126,9 +126,14 @@
 			<groupId>org.wso2</groupId>
 			<artifactId>org.wso2.client.Administrative</artifactId>
 			<version>1.0.0</version>
-			<!-- <systemPath>${basedir}/src/main/webapp/lib/org.wso2.client.Administrative-1.0.0.jar</systemPath> -->
+			<!-- <systemPath>${basedir}/src/main/webapp/lib/org.wso2.client.Administrative-1.0.0.jar</systemPath>
+			<scope>system</scope> -->
 		</dependency>
-
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

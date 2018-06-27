@@ -3,17 +3,16 @@ package vn.lgsp.fw.cmon;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
-import org.pac4j.core.authorization.authorizer.RequireAnyRoleAuthorizer;
+import org.opensaml.saml.common.xml.SAMLConstants;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
 import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.saml.client.SAML2Client;
 import org.pac4j.saml.client.SAML2ClientConfiguration;
 import org.pac4j.springframework.security.authentication.Pac4jAuthenticationToken;
-import org.pac4j.springframework.security.util.SpringSecurityHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -29,10 +28,9 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import vn.lgsp.fw.cmon.config.CustomAuthorizer;
+import vn.lgsp.fw.cmon.config.SAML2Properties;
 import vn.lgsp.fw.cmon.domain.AuditorAwareImpl;
 import vn.lgsp.fw.cmon.web.CacheFilter;
 import vn.lgsp.fw.core.BaseRepositoryImpl;
@@ -44,10 +42,12 @@ import vn.lgsp.fw.core.BaseRepositoryImpl;
 @ComponentScan(basePackages = { "vn.lgsp.fw", "org.pac4j.springframework.web"  })
 public class Application extends SpringBootServletInitializer{
 	
-	private String keystorePath = "resource:cmon-app.jks";
-	private String keystorePassword = "cmon-app";
-	private String privateKeyPassword = "cmon-app";
-	private String identityProviderMetadataPath = "resource:is-metadata.xml";
+	@Autowired
+	SAML2Properties saml2Properties;
+	
+	@Value("${conf.application.baseUrl}")
+	private String baseUrl;
+	
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -73,29 +73,28 @@ public class Application extends SpringBootServletInitializer{
 	
 	@Bean
     public AuditorAware<String> auditorAware() {
-		System.out.println("auditorAware");
         return new AuditorAwareImpl();
     }
 	
 	@Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-		System.out.println("propertySourcesPlaceholderConfigurer");
         return new PropertySourcesPlaceholderConfigurer();
     }
 
 	@Bean
     public Config samlconfig() {
-		System.out.println("SpringSecurityConfig config");
 		final SAML2ClientConfiguration samlCfg = new SAML2ClientConfiguration();
-		samlCfg.setKeystorePath(keystorePath);
-		samlCfg.setKeystorePassword(keystorePassword);
-		samlCfg.setPrivateKeyPassword(privateKeyPassword);	
-		samlCfg.setIdentityProviderMetadataPath(identityProviderMetadataPath);
-		samlCfg.setKeystoreAlias("cmon-app");
-		samlCfg.setMaximumAuthenticationLifetime(3600);
-		samlCfg.setServiceProviderEntityId("cmon_app");
+		samlCfg.setKeystorePath(saml2Properties.getKeystorePath());
+		samlCfg.setKeystorePassword(saml2Properties.getKeystorePassword());
+		samlCfg.setKeystoreAlias(saml2Properties.getKeystoreAlias());
+		samlCfg.setPrivateKeyPassword(saml2Properties.getPrivateKeyPassword());	
+		samlCfg.setServiceProviderEntityId(saml2Properties.getServiceProviderEntityId());
+		samlCfg.setIdentityProviderMetadataPath(saml2Properties.getIdentityProviderMetadataPath());
 		samlCfg.setServiceProviderMetadataPath("sp-metadata.xml");
+		samlCfg.setMaximumAuthenticationLifetime(3600);
+		samlCfg.setDestinationBindingType(SAMLConstants.SAML2_REDIRECT_BINDING_URI);
 	    final SAML2Client saml2Client = new SAML2Client(samlCfg);
+	    //saml2Client.setCredentialsExtractor(new SAML2CredentialsExtractor(samlCfg, saml2Client));
 	    saml2Client.addAuthorizationGenerator((ctx, profile) -> {
 	        if (profile.getAttribute("roles") != null) {
 	            List<String> roles = (List) profile.getAttribute("roles");
@@ -110,10 +109,8 @@ public class Application extends SpringBootServletInitializer{
 	        
 	        return profile;
 	    });
-	    final Clients clients = new Clients("http://localhost:8082/cmon-web/callback", saml2Client);
+	    final Clients clients = new Clients(baseUrl+"/callback", saml2Client);
 	    final Config samlConfig = new Config(clients);
-	    samlConfig.addAuthorizer("admin", new RequireAnyRoleAuthorizer("ADMIN"));
-	    samlConfig.addAuthorizer("custom", new CustomAuthorizer());
 		return samlConfig;
 	}
 	
